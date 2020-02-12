@@ -26,10 +26,30 @@
         android:layout_marginEnd="171dp"
         android:layout_marginBottom="289dp"
         android:background="@android:color/holo_red_dark"
+        android:gravity="center|top"
         android:text="Loves Tithi"
+        android:textColor="#152DB3"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/helloTestTextView" />
+
+    <TextView
+        android:id="@+id/testingMyGreatApp"
+        android:layout_width="211dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="93dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginEnd="107dp"
+        android:layout_marginBottom="103dp"
+        android:background="#0FF319"
+        android:paddingTop="5dp"
+        android:text="My Great App"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/helloTestTextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
