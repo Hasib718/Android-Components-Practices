@@ -7,49 +7,72 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/helloTestTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello Toufiq"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/testingTextView"
-        style="@android:style/Widget.DeviceDefault.SeekBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="171dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="171dp"
-        android:layout_marginBottom="289dp"
-        android:background="@android:color/holo_red_dark"
-        android:gravity="center|top"
-        android:text="Loves Tithi"
-        android:textColor="#152DB3"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/helloTestTextView" />
-
-    <TextView
         android:id="@+id/testingMyGreatApp"
-        android:layout_width="211dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="93dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="107dp"
-        android:layout_marginBottom="103dp"
+        android:layout_width="204dp"
+        android:layout_height="59dp"
+        android:layout_marginTop="100dp"
         android:background="#0FF319"
         android:paddingTop="5dp"
         android:text="My Great App"
         android:textAlignment="center"
         android:textSize="30sp"
-        app:layout_constraintBottom_toTopOf="@+id/helloTestTextView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/testButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="clickFunction"
+        android:text="Button"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.458"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.472" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="358dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:hint="Username"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/testingMyGreatApp" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="354dp"
+        android:layout_height="50dp"
+        android:ems="10"
+        android:hint="Password"
+        android:inputType="textPassword"
+        app:layout_constraintBottom_toTopOf="@+id/testButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username" />
+
+    <ImageView
+        android:id="@+id/firstImage"
+        android:layout_width="254dp"
+        android:layout_height="275dp"
+        android:layout_marginStart="78dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="79dp"
+        android:layout_marginBottom="55dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.55"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/testButton"
+        app:layout_constraintVertical_bias="0.53"
+        app:srcCompat="@drawable/alba_flores" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
