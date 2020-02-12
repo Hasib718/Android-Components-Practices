@@ -9,12 +9,13 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
+    //This method is linked with "button"
     public void clickFunction(View view) {
-        Log.i("Convert", "Button Pressed");
-        EditText amount = (EditText) findViewById(R.id.inputAmountBox);
-        double dub = Double.parseDouble(amount.getText().toString());
+        Log.i("Convert", "Button Pressed"); //Button press testing
+        EditText amount = (EditText) findViewById(R.id.inputAmountBox); //linked with Text view named "inputAmountBox" id
+        double dub = Double.parseDouble(amount.getText().toString()); //converted String to Double
 
-        Toast.makeText(MainActivity.this, String.valueOf(dub*84.93), Toast.LENGTH_LONG).show();
+        Toast.makeText(MainActivity.this, String.valueOf(dub*84.93), Toast.LENGTH_LONG).show(); // for short message delivery
     }
 
     @Override
