@@ -121,6 +121,7 @@ public class MainActivity extends AppCompatActivity {
         activeGame = true;//Restarting game means the game is active
 
         //Resetting gameState
+        //ajaira jinsih pati
         for (int i=0; i<gameState.size(); i++) {
             gameState.set(i, 2);
         }
