@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/playIcon"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:src="@drawable/ic_play_arrow_black_24dp"/>
+
+    <TextView
+        android:id="@+id/textVolume"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="310dp"
+        android:text="Sound"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:padding="30dp"/>
+    <SeekBar
+        android:id="@+id/seekBarSound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="400dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"/>
+    <TextView
+        android:id="@+id/textAudio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="410dp"
+        android:text="Music"
+        android:textSize="20sp"
+        android:textAlignment="center"
+        android:padding="30dp"/>
+    <SeekBar
+        android:id="@+id/seekBarAudio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="500dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true"/>
+
+</RelativeLayout>
