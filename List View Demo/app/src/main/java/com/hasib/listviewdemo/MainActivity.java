@@ -29,14 +29,14 @@ public class MainActivity extends AppCompatActivity {
                 android.R.layout.simple_list_item_1, list);
         listView.setAdapter(arrayAdapter);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("Name: ", parent.getItemAtPosition(position).toString());
-
-                Toast.makeText(MainActivity.this,
-                        parent.getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();
-            }
-        });
+//        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                Log.i("Name: ", parent.getItemAtPosition(position).toString());
+//
+//                Toast.makeText(MainActivity.this,
+//                        parent.getItemAtPosition(position).toString(), Toast.LENGTH_LONG).show();
+//            }
+//        });
     }
 }
