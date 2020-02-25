@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:max="600"
+        android:min="0"
+        android:progress="@integer/luminosite_default"
+        android:progressDrawable="@drawable/seekbar_style"
+        android:thumb="@drawable/custom_thumb"/>
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="375dp"
+            android:layout_height="500dp"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical"
+            android:layout_marginTop="120dp">
+
+            <ImageView
+                android:id="@+id/eggView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/egg"/>
+
+        </LinearLayout>
+
+    <Button
+        android:id="@+id/goStopButton"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="480dp"
+        android:layout_marginStart="150dp"
+        android:padding="10dp"
+        android:text="go"
+        android:onClick="pressedButton"/>
+
+    <TextView
+        android:id="@+id/timeText"
+        android:layout_width="200dp"
+        android:layout_height="120dp"
+        android:ems="10"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="300dp"
+        android:textSize="100sp"
+        android:alpha="0.6"
+        android:gravity="center_vertical"
+        android:text="0:00"/>
+
+
+</RelativeLayout>

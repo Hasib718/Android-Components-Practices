@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        new CountDownTimer(11000, 1000) {
+        CountDownTimer cnt = new CountDownTimer(11000, 1000) {
             public void onTick(long milliSecondUntilDone) {
                 //Count down is counting down(every second)
 
@@ -28,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }.start();
 
+        cnt.cancel();
+        cnt.start();
 //        final Handler handler = new Handler();
 //        Runnable run = new Runnable() {
 //            @Override
