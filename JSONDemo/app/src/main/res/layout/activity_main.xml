@@ -9,8 +9,37 @@
     <ImageView
         android:id="@+id/backgroundImage"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:src="@drawable/nature_background"/>
 
-    </ImageView>
+    <EditText
+        android:id="@+id/takingCityNamesText"
+        android:layout_width="fill_parent"
+        android:layout_height="60dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:hint="Enter a City Name"
+        android:layout_marginTop="160dp"
+        android:textAlignment="center"
+        android:textColor="@color/GhostWhite"/>
+
+    <Button
+        android:id="@+id/runningButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="230dp"
+        android:text="what's the weather"
+        android:textColor="@color/GhostWhite"
+        android:background="@null"
+        android:onClick="findWeather"/>
+
+    <TextView
+        android:id="@+id/weatherShowingTextView"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginTop="300dp"
+        android:textColor="@color/White"
+        android:textSize="18sp"/>
 
 </RelativeLayout>
