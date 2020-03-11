@@ -17,12 +17,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
 import java.util.List;
@@ -31,7 +35,8 @@ import java.util.Locale;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     LocationManager locationManager;
     LocationListener locationListener;
-    Location changedLocation;
+//    FusedLocationProviderClient fusedLocationProviderClient;
+//    private Location currentLocation;
     private GoogleMap mMap;
 
     @Override
@@ -54,7 +59,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
+//         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+//         fetchLastLocation();
     }
+
+//    private void fetchLastLocation() {
+//        Task<Location> task = fusedLocationProviderClient.getLastLocation();
+//        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+//            @Override
+//            public void onSuccess(Location location) {
+//                if (location != null) {
+//                    currentLocation = location;
+//
+//                    Toast.makeText(getApplicationContext(), currentLocation.getLatitude()+" "
+//                            +currentLocation.getLongitude(), Toast.LENGTH_LONG).show();
+//                }
+//            }
+//        });
+//    }
 
 
     /**
@@ -117,15 +139,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, locationListener);
 
-            Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+//            Location lastKnownLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
 
-            String showingLocation = Double.toString(lastKnownLocation.getLatitude()) + "  " + Double.toString(lastKnownLocation.getLatitude());
-            Toast.makeText(MapsActivity.this, showingLocation, Toast.LENGTH_LONG).show();
-
-            LatLng newLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
-            mMap.addMarker(new MarkerOptions().position(newLocation));
-            //mMap.moveCamera(CameraUpdateFactory.newLatLng(newLocation));
+//            String showingLocation = Double.toString(lastKnownLocation.getLatitude()) + "  " + Double.toString(lastKnownLocation.getLatitude());
+//            Toast.makeText(MapsActivity.this, showingLocation, Toast.LENGTH_LONG).show();
+//
+//            LatLng newLocation = new LatLng(lastKnownLocation.getLatitude(), lastKnownLocation.getLongitude());
+//            mMap.addMarker(new MarkerOptions().position(newLocation));
+//            //mMap.moveCamera(CameraUpdateFactory.newLatLng(newLocation));
 
         }
+
+//        LatLng latLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
+//        MarkerOptions markerOptions = new MarkerOptions().position(latLng).title("I am Here!");
+//
+//        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+//        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10f));
+//        mMap.addMarker(markerOptions);
     }
 }

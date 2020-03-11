@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Current Location New Method</string>
+    <string name="Map_API_Key" translatable="false">AIzaSyC91I7qCjndeD_wFEOxbJLpeBHLGQxGSPU</string>
+</resources>
