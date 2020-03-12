@@ -1,0 +1,2 @@
+rootProject.name='User Location(onLocationChange)'
+include ':app'

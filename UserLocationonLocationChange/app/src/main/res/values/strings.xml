@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">User Location(onLocationChange)</string>
+    <string name="map_API_KEY" translatable="false">AIzaSyC91I7qCjndeD_wFEOxbJLpeBHLGQxGSPU</string>
+</resources>
