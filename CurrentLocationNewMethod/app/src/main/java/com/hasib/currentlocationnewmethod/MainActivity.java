@@ -9,6 +9,8 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
@@ -26,13 +28,15 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     Location currentLocation;
     FusedLocationProviderClient fusedLocationProviderClient;
     private static final int REQUEST_CODE = 101;
+    private ImageButton gettingLocationButoon;
+    View nview;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         switch (requestCode) {
             case REQUEST_CODE:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    fetchLastLocation();
+                    configureButton();
                 }
                 break;
         }
@@ -43,32 +47,44 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        gettingLocationButoon = (ImageButton) findViewById(R.id.gettingLocationButton);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        fetchLastLocation();
+        configureButton();
+    }
+
+    public void configureButton() {
+        gettingLocationButoon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fetchLastLocation();
+            }
+        });
     }
 
     private void fetchLastLocation() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]
-                    {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
-            return;
-        }
-        Task<Location> task = fusedLocationProviderClient.getLastLocation();
-        task.addOnSuccessListener(new OnSuccessListener<Location>() {
-            @Override
-            public void onSuccess(Location location) {
-                if (location != null) {
-                    currentLocation = location;
-
-                    Toast.makeText(getApplicationContext(), currentLocation.getLatitude()+
-                            " "+currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
-
-                    SupportMapFragment supportMapFragment = (SupportMapFragment)
-                            getSupportFragmentManager().findFragmentById(R.id.google_Map);
-                    supportMapFragment.getMapAsync(MainActivity.this);
-                }
+        if (gettingLocationButoon.isPressed()) {
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]
+                        {Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_CODE);
+                return;
             }
-        });
+            Task<Location> task = fusedLocationProviderClient.getLastLocation();
+            task.addOnSuccessListener(new OnSuccessListener<Location>() {
+                @Override
+                public void onSuccess(Location location) {
+                    if (location != null) {
+                        currentLocation = location;
+
+                        Toast.makeText(getApplicationContext(), currentLocation.getLatitude() +
+                                " " + currentLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+
+                        SupportMapFragment supportMapFragment = (SupportMapFragment)
+                                getSupportFragmentManager().findFragmentById(R.id.google_Map);
+                        supportMapFragment.getMapAsync(MainActivity.this);
+                    }
+                }
+            });
+        }
     }
 
     @Override

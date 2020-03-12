@@ -11,5 +11,11 @@
         android:layout_height="match_parent"
         android:id="@+id/google_Map"
         android:name="com.google.android.gms.maps.SupportMapFragment"/>
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/gettingLocationButton"
+        android:src="@drawable/ic_search_black_24dp"
+        android:onClick="configureButton"/>
     
 </RelativeLayout>

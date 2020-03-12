@@ -1,0 +1,2 @@
+rootProject.name='Practising XML'
+include ':app'
