@@ -4,16 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".SecondActivity">
 
-    <Button
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Next"
-        android:textSize="20sp"
-        android:textAllCaps="false"
-        android:onClick="nextActivity"/>
+        android:src="@drawable/ic_arrow_back_black_48dp"
+        android:background="@color/White"
+        android:id="@+id/backToMainActivityButton"
+        android:onClick="backToMainActivity"/>
 
 </RelativeLayout>
