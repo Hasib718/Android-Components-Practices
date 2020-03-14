@@ -38,7 +38,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    private void locationButton() {
+    public void locationButton() {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
