@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_arrow_back_black_48dp"
         android:background="@color/White"
-        android:id="@+id/backToMainActivityButton"
+        android:id="@+id/backButton"
         android:onClick="backToMainActivity"/>
 
 </RelativeLayout>

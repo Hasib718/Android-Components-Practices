@@ -9,7 +9,11 @@ import android.view.View;
 public class MainActivity extends AppCompatActivity {
 
     public void nextActivity(View view) {
-        Intent intent = new Intent(getApplicationContext(), SecondActivity.class);
+        Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+
+        //sharing data between activities
+        intent.putExtra("message", "2nd Layout");
+
         startActivity(intent);
     }
 
