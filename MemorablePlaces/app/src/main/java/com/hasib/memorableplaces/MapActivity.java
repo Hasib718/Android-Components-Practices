@@ -6,7 +6,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -31,6 +33,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 
 import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -41,12 +45,15 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private GoogleMap gMap;
     private Marker newMarker;
     private MarkerOptions markerOptions;
+    private SharedPreferences sharedPreferences;
+    private int mapSize = 0;
     static MarkerOptions fromMain = null;
     static Marker newFromMain;
 
     public void backToListView(View view) {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         MainActivity.arrayAdapter.notifyDataSetChanged();
+
         newMarker.remove();
         //newFromMain.remove();
         startActivity(intent);
@@ -69,6 +76,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
         geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+        sharedPreferences = this.getSharedPreferences("com.hasib.memorableplaces", Context.MODE_PRIVATE);
 
         fetchLastLocation();
     }
@@ -118,17 +126,39 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         temp.remove();
 
         MainActivity.placesList.put(geoCoding(latLng), latLng);
+
+        if (MainActivity.placesList.size() > mapSize) {
+            try {
+                List<String> addressList = new ArrayList<>(MainActivity.placesList.keySet());
+                List<String> latitude = new ArrayList<>();
+                List<String> longitude = new ArrayList<>();
+
+                for (LatLng locations : MainActivity.placesList.values()) {
+                    latitude.add(Double.toString(locations.latitude));
+                    longitude.add(Double.toString(locations.longitude));
+                }
+
+                sharedPreferences.edit().putString("addressList", ObjectSerializer.serialize((Serializable) addressList)).apply();
+                sharedPreferences.edit().putString("latitude", ObjectSerializer.serialize((Serializable) latitude)).apply();
+                sharedPreferences.edit().putString("longitude", ObjectSerializer.serialize((Serializable) longitude)).apply();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mapSize = MainActivity.placesList.size();
+        }
+
+
+        Toast.makeText(this, "Location Saved", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        String addressLine = "";
         gMap = googleMap;
         gMap.setOnMapLongClickListener(this);
 
-        addressLine = geoCoding(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()));
-
-        markerOptions = new MarkerOptions().position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())).title(addressLine);
+        markerOptions = new MarkerOptions()
+                .position(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()))
+                .title(geoCoding(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude())));
         gMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), 15));
         gMap.addMarker(markerOptions);
         if (fromMain != null) {
