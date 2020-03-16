@@ -16,6 +16,18 @@
         android:layout_height="wrap_content"
         android:id="@+id/gettingLocationButton"
         android:src="@drawable/ic_search_black_24dp"
-        android:onClick="configureButton"/>
-    
+        android:onClick="fetchDeviceLocation"
+        android:layout_marginStart="300dp"
+        android:layout_marginTop="600dp"/>
+    <SearchView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/locationSearchView"
+        android:queryHint="Search Here"
+        android:iconifiedByDefault="false"
+        android:layout_margin="10dp"
+        android:elevation="5dp"
+        android:background="@drawable/bg_round"
+        android:onClick="searchLocation"/>
+
 </RelativeLayout>
