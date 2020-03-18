@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +19,6 @@ public class NoteNameDialog extends AppCompatDialogFragment {
     private EditText noteNameText;
     private static final String TAG = "NoteNameDialog";
     private NoteNameDialogListener listener;
-    public static String nName;
 
     public String getName() {
         return noteNameText.getEditableText().toString();
@@ -45,8 +45,6 @@ public class NoteNameDialog extends AppCompatDialogFragment {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String name = noteNameText.getEditableText().toString();
-                        nName = name;
-                        Log.d(TAG, "onClick: "+name);
                         listener.applyTexts(name);
                     }
                 });
