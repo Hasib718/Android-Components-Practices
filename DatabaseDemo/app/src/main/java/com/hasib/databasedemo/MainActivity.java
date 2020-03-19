@@ -19,10 +19,14 @@ public class MainActivity extends AppCompatActivity {
             SQLiteDatabase myDatabase = this.openOrCreateDatabase("Users", MODE_PRIVATE, null);
             myDatabase.execSQL("CREATE TABLE IF NOT EXISTS users (name VARCHAR, age INT(3))");
 
-            myDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Hasib', 22)");
-            myDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Toufiq', 20)");
-            myDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Wadud', 21)");
-            myDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Antor', 19)");
+//            myDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Hasib', 22)");
+//            myDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Toufiq', 20)");
+//            myDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Wadud', 21)");
+//            myDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Antor', 19)");
+//            myDatabase.execSQL("INSERT INTO users (name, age) VALUES ('Antor', 19)");
+
+//            myDatabase.execSQL("DELETE FROM users WHERE name = (SELECT name FROM users WHERE name = 'Antor' LIMIT 1)");
+            myDatabase.execSQL("DELETE FROM users WHERE name = 'Antor' LIMIT 1");
 
             Cursor c = myDatabase.rawQuery("SELECT * FROM users", null);
 
@@ -31,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
 
             c.moveToFirst();
             while(c != null) {
-                Log.d(TAG, "onCreate: name "+c.getString(nameIndex));
-                Log.d(TAG, "onCreate: age "+c.getInt(ageIndex));
+                Log.i(TAG, "onCreate: name "+c.getString(nameIndex));
+                Log.i(TAG, "onCreate: age "+c.getInt(ageIndex));
 
                 c.moveToNext();
             }
