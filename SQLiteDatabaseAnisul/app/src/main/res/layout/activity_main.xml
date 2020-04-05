@@ -48,4 +48,22 @@
         android:textAllCaps="false"
         android:background="#0000ff"/>
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/displayAllDataId"
+        android:layout_marginTop="280dp"
+        android:text="Display All Data"
+        android:textAllCaps="false"
+        android:background="#FFA500"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/updateButton"
+        android:layout_marginTop="360dp"
+        android:text="Update Data"
+        android:textAllCaps="false"
+        android:background="#F0FFFF"/>
+
 </RelativeLayout>
