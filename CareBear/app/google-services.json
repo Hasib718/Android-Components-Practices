@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "636813308846",
+    "firebase_url": "https://care-bear-13346.firebaseio.com",
+    "project_id": "care-bear-13346",
+    "storage_bucket": "care-bear-13346.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636813308846:android:73fc82cf676ecc97f88e3f",
+        "android_client_info": {
+          "package_name": "com.hasib.carebear"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "636813308846-t7db492qdeit04pn8elvnd67mmdejgud.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDC2dxqfelzuDdMhhguN_c1BaRIB9h0Zoo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "636813308846-t7db492qdeit04pn8elvnd67mmdejgud.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
