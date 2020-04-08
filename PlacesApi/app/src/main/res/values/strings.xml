@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Places Api</string>
     <string name="places_API_keys" translatable="false">AIzaSyCko7OOB1rp9RqiHSE8iV9CyYABWot8a6A</string>
+    <string name="places_API_keys_algolia" translatable="false">96391eb6f4bb13a044c291e715dfe185</string>
 </resources>
