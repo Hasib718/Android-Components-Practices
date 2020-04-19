@@ -17,19 +17,21 @@ public class SampleFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        inflater = getActivity().getLayoutInflater();
-        final View view = inflater.inflate(R.layout.fragment_sample, null);
+//        inflater = getActivity().getLayoutInflater();
+//        final View view = inflater.inflate(R.layout.fragment_sample, null);
+//
+//        final TextView textView = view.findViewById(R.id.fragmentTextView);
+//        Button button = view.findViewById(R.id.fragmentButton);
+//
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                textView.setText("Fuck");
+//            }
+//        });
+//
+//        return view;
 
-        final TextView textView = view.findViewById(R.id.fragmentTextView);
-        Button button = view.findViewById(R.id.fragmentButton);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                textView.setText("Fuck");
-            }
-        });
-
-        return view;
+        return inflater.inflate(R.layout.fragment_sample, container, false);
     }
 }
