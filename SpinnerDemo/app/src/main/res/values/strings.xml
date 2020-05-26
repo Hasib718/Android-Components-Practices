@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Spinner Demo</string>
+
+    <string-array name="Degrees" >
+        <item>MBBS</item>
+        <item>FCPS</item>
+        <item>MD/MS</item>
+        <item>MPhil</item>
+    </string-array>
+</resources>
