@@ -1,4 +1,4 @@
-package com.example.medicinetimer;
+package com.example.medicinetimer.container;
 
 public class MedicineDose {
     private String time;
@@ -7,6 +7,11 @@ public class MedicineDose {
     public MedicineDose(String time, String dose) {
         this.time = time;
         this.dose = dose;
+    }
+
+    public MedicineDose(String time, Double dose) {
+        this.time = time;
+        this.dose = Double.toString(dose);
     }
 
     public String getTime() {
@@ -18,7 +23,7 @@ public class MedicineDose {
     }
 
     public String getDose() {
-        return dose;
+        return "(Take : "+dose+")";
     }
 
     public void setDose(String dose) {

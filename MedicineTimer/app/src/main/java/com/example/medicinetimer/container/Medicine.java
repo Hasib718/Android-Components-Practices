@@ -1,30 +1,40 @@
-package com.example.medicinetimer;
+package com.example.medicinetimer.container;
 
 import java.util.List;
 
 public class Medicine {
-    private String Name;
+    private String name;
     private boolean activityState;
     private List<String> times;
     private String days;
-    private String StartingDay;
+    private String startingDay;
     private List<MedicineDose> medicineDoses;
 
+    public Medicine() {}
+
     public Medicine(String name, boolean activityState, List<String> times, String days, String startingDay, List<MedicineDose> medicineDoses) {
-        Name = name;
+        this.name = name;
         this.activityState = activityState;
         this.times = times;
         this.days = days;
-        StartingDay = startingDay;
+        this.startingDay = startingDay;
         this.medicineDoses = medicineDoses;
     }
 
+    public Medicine(String name, boolean activityState, List<String> times, String days, String startingDay) {
+        this.name = name;
+        this.activityState = activityState;
+        this.times = times;
+        this.days = days;
+        this.startingDay = startingDay;
+    }
+
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public boolean isActivityState() {
@@ -52,11 +62,11 @@ public class Medicine {
     }
 
     public String getStartingDay() {
-        return StartingDay;
+        return startingDay;
     }
 
     public void setStartingDay(String startingDay) {
-        StartingDay = startingDay;
+        this.startingDay = startingDay;
     }
 
     public List<MedicineDose> getMedicineDoses() {
