@@ -1,6 +1,7 @@
 package com.example.medicinetimer.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,9 +46,23 @@ public class TimeDoseRecyclerViewAdapter extends RecyclerView.Adapter<TimeDoseRe
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.time.setText(mDoseTimeList.get(position).getTime());
         holder.dose.setText(mDoseTimeList.get(position).getDose());
+
+        Log.d(TAG, "onBindViewHolder: " + mDoseTimeList.size());
+        if (position == mDoseTimeList.size() - 1) {
+            holder.underlineView.setVisibility(View.GONE);
+        } else {
+            holder.underlineView.setVisibility(View.VISIBLE);
+        }
+
+        holder.timeDoseLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onTimeListClickEvents.onTimeDoseClickListener(position, mDoseTimeList.get(position));
+            }
+        });
     }
 
     @Override

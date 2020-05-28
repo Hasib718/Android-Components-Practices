@@ -1,5 +1,7 @@
 package com.example.medicinetimer.container;
 
+import androidx.annotation.NonNull;
+
 public class MedicineDose {
     private String time;
     private String dose;
@@ -28,5 +30,12 @@ public class MedicineDose {
 
     public void setDose(String dose) {
         this.dose = dose;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return ("Time " + time + "\n" +
+                "Dose " + dose + "\n");
     }
 }

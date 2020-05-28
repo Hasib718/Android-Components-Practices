@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Medicine Timer</string>
+
+    <!-- Hardcore strings used in xml files -->
+    <string name="message1">Set quantity(number of doses) to be taken at this\n hour</string>
+    <string name="message2">Reminder Time</string>
+    <string name="message3">Set time and quantity</string>
+    <string name="dose_count">1.00</string>
+    <string name="cancel">Cancel</string>
+    <string name="set">Set</string>
 </resources>

@@ -29,6 +29,7 @@
         android:textColor="#FF673AB7"
         android:layout_marginStart="30dp" />
 
+
     <View
         android:id="@+id/underLineView"
         android:layout_width="match_parent"

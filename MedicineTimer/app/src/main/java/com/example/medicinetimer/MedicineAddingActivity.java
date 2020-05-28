@@ -1,13 +1,6 @@
 package com.example.medicinetimer;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -15,18 +8,28 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioGroup;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.medicinetimer.adapters.TimeDoseRecyclerViewAdapter;
 import com.example.medicinetimer.container.Medicine;
 import com.example.medicinetimer.container.MedicineDose;
 import com.example.medicinetimer.fragments.ReminderDialogFragment;
 import com.example.medicinetimer.listeners.OnTimeListClickEvents;
 import com.example.medicinetimer.listeners.OnTimeListItemSelectionEvents;
-import com.example.medicinetimer.support.ObjectSerializer;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
@@ -44,9 +47,8 @@ public class MedicineAddingActivity extends AppCompatActivity implements OnTimeL
 
     private RecyclerView medicineTimeDoseRecyclerView;
     private TimeDoseRecyclerViewAdapter adapter;
-    private ArrayList<MedicineDose> medicineDoses = new ArrayList<>(Arrays.asList(new MedicineDose("8:00 AM", 1.00)));
+    private ArrayList<MedicineDose> selectedMedication = new ArrayList<>(Arrays.asList(new MedicineDose("8:00 AM", 1.00)));
     private ArrayList<ArrayList<String>> timeTable = new ArrayList<>();
-    private ArrayList<ArrayList<String>> timeTableClone;
 
     private RadioGroup durationRadioGroup, daysRadioGroup;
 
@@ -72,10 +74,8 @@ public class MedicineAddingActivity extends AppCompatActivity implements OnTimeL
         medicineTimeInput.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: "+timeTable);
                 timeTable.clear();
-
-                retrieveData();
+                retrieveTimeTableData();
 
                 dialogFragment = new ReminderDialogFragment(MedicineAddingActivity.this, timeTable.get(0));
                 dialogFragment.show(getSupportFragmentManager(), "Reminder Time");
@@ -84,15 +84,22 @@ public class MedicineAddingActivity extends AppCompatActivity implements OnTimeL
 
     }
 
-    private void retrieveData() {
-        SharedPreferences sharedPreferences = MedicineAddingActivity.this.getSharedPreferences("timeTable", Context.MODE_PRIVATE);
-        try {
-            timeTable.add((ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("timeTableStart", null)));
-            timeTable.add((ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("timeTableFreq", null)));
-            timeTable.add((ArrayList<String>) ObjectSerializer.deserialize(sharedPreferences.getString("timeTableInt", null)));
+    private void retrieveTimeTableData() {
+        try (InputStream is = getAssets().open("Time Table.json")) {
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
 
-            Log.d(TAG, "onCreate: "+timeTable);
-        } catch (IOException e) {
+            String json = new String(buffer, StandardCharsets.UTF_8);
+            JSONObject object = new JSONObject(json);
+
+            for (int i = 0; i < object.getJSONArray("iterator").length(); i++) {
+                String[] array = object.getJSONArray(object.getJSONArray("iterator").getString(i)).join(",").split("\",\"");
+                array[0] = array[0].replace("\"", "");
+                array[array.length - 1] = array[array.length - 1].replace("\"", "");
+                timeTable.add(new ArrayList<String>(Arrays.asList(array)));
+            }
+        } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
     }
@@ -111,10 +118,11 @@ public class MedicineAddingActivity extends AppCompatActivity implements OnTimeL
 
     private void initTimeDoseRecyclerView() {
         medicineTimeDoseRecyclerView = findViewById(R.id.timeDoseRecyclerViewTable);
-        adapter = new TimeDoseRecyclerViewAdapter(this, medicineDoses);
+        adapter = new TimeDoseRecyclerViewAdapter(this, selectedMedication);
         medicineTimeDoseRecyclerView.setAdapter(adapter);
         medicineTimeDoseRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        adapter.setOnTimeListClickEvents(this);
     }
 
     @Override
@@ -149,7 +157,46 @@ public class MedicineAddingActivity extends AppCompatActivity implements OnTimeL
             if (!selected.equals("Intervals")) {
                 medicineTimeInput.setText(selected);
                 dialogFragment.dismiss();
+
+                retrieveTimeDoseTableData(selected);
+                adapter.notifyDataSetChanged();
             }
+        }
+    }
+
+    @Override
+    public void onTimeDoseClickListener(int position, MedicineDose medicineDose) {
+        Log.d(TAG, "onTimeDoseClickListener: " + medicineDose.toString());
+    }
+
+    private void retrieveTimeDoseTableData(String selected) {
+        try (InputStream is = getAssets().open("Time Dose Table.json")) {
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+
+            String json = new String(buffer, StandardCharsets.UTF_8);
+            JSONObject object = new JSONObject(json);
+            JSONArray array;
+
+            if (selected.matches("(.*)day(.*)")) {
+                array = object.getJSONArray("frequency");
+            } else {
+                array = object.getJSONArray("intervals");
+            }
+
+            selectedMedication.clear();
+            for (int j = 0; j < array.length(); j++) {
+                if (array.getJSONObject(j).has(selected)) {
+                    for (int i = 0; i < array.getJSONObject(j).getJSONArray(selected).length(); i++) {
+                        selectedMedication.add(new MedicineDose(array.getJSONObject(j).getJSONArray(selected).getJSONObject(i).getString("time"),
+                                array.getJSONObject(j).getJSONArray(selected).getJSONObject(i).getDouble("dose")));
+                    }
+                }
+            }
+            Log.d(TAG, "retrieveTimeDoseTableData: " + selectedMedication.toString());
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
         }
     }
 
