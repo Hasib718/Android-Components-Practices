@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="10dp">
 
     <com.google.android.material.textview.MaterialTextView
         android:layout_width="wrap_content"
@@ -36,14 +37,14 @@
         android:layout_marginTop="5dp" />
 
     <TimePicker
-        android:layout_width="340dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:id="@+id/timePicker"
         app:layout_constraintTop_toBottomOf="@id/underline1"
         android:layout_marginTop="10dp"
-        android:timePickerMode="clock"
+        android:timePickerMode="spinner"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginStart="25dp"
+        android:layout_marginStart="10dp"
         android:headerBackground="@color/BlueViolet"
         android:numbersSelectorColor="@color/BlueViolet" />
 
@@ -66,11 +67,11 @@
         app:layout_constraintStart_toStartOf="parent"
         android:src="@drawable/round_remove_circle_outline_24"
         android:background="@color/White"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="105dp" />
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="85dp" />
 
     <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
+        android:layout_width="50dp"
         android:layout_height="wrap_content"
         android:id="@+id/doseCount"
         app:layout_constraintTop_toBottomOf="@id/message"
@@ -78,7 +79,7 @@
         android:text="@string/dose_count"
         android:textColor="@color/Black"
         android:textSize="25dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="10dp" />
 
     <androidx.appcompat.widget.AppCompatImageButton
@@ -89,26 +90,26 @@
         app:layout_constraintStart_toEndOf="@id/doseCount"
         android:src="@drawable/round_add_circle_outline_24"
         android:background="@color/White"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
         android:layout_marginStart="10dp" />
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/cancel_button"
+        android:id="@+id/cancelButton"
         app:layout_constraintTop_toBottomOf="@id/minusButton"
         app:layout_constraintStart_toStartOf="parent"
         android:text="@string/cancel"
         android:textAllCaps="false"
-        android:layout_marginStart="95dp"
+        android:layout_marginStart="75dp"
         android:layout_marginTop="10dp" />
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/set_button"
+        android:id="@+id/setButton"
         app:layout_constraintTop_toBottomOf="@id/plusButton"
-        app:layout_constraintStart_toEndOf="@id/cancel_button"
+        app:layout_constraintStart_toEndOf="@id/cancelButton"
         android:text="@string/set"
         android:textAllCaps="false"
         android:layout_marginStart="10dp"

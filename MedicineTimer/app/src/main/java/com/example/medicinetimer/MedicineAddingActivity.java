@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RadioGroup;
+import android.widget.TimePicker;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,12 +18,16 @@ import com.example.medicinetimer.adapters.TimeDoseRecyclerViewAdapter;
 import com.example.medicinetimer.container.Medicine;
 import com.example.medicinetimer.container.MedicineDose;
 import com.example.medicinetimer.fragments.ReminderDialogFragment;
+import com.example.medicinetimer.fragments.TimeDosePickerDialogFragment;
+import com.example.medicinetimer.listeners.OnPickerDialogActionButtonEvents;
 import com.example.medicinetimer.listeners.OnTimeListClickEvents;
 import com.example.medicinetimer.listeners.OnTimeListItemSelectionEvents;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,7 +42,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 
-public class MedicineAddingActivity extends AppCompatActivity implements OnTimeListClickEvents {
+public class MedicineAddingActivity extends AppCompatActivity implements OnTimeListClickEvents,
+        TimePicker.OnTimeChangedListener, OnPickerDialogActionButtonEvents {
 
     private static final String TAG = "MedicineAddingActivity";
 
@@ -55,10 +61,14 @@ public class MedicineAddingActivity extends AppCompatActivity implements OnTimeL
     private MenuItem saveOption;
 
     private Medicine medicine = new Medicine();
+    private MedicineDose medicineDose = new MedicineDose();
+    private int position;
 
     private ReminderDialogFragment dialogFragment;
 
     private OnTimeListItemSelectionEvents onTimeListItemSelectionEvents;
+
+    private TimeDosePickerDialogFragment timeDialogFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,9 +177,14 @@ public class MedicineAddingActivity extends AppCompatActivity implements OnTimeL
     @Override
     public void onTimeDoseClickListener(int position, MedicineDose medicineDose) {
         Log.d(TAG, "onTimeDoseClickListener: " + medicineDose.toString());
+
+        timeDialogFragment = new TimeDosePickerDialogFragment(this, medicineDose);
+        timeDialogFragment.show(getSupportFragmentManager(), "Picker");
+
+        timeDialogFragment.setOnPickerDialogActionButtonEvents(MedicineAddingActivity.this);
     }
 
-    private void retrieveTimeDoseTableData(String selected) {
+    private void retrieveTimeDoseTableData(@NotNull String selected) {
         try (InputStream is = getAssets().open("Time Dose Table.json")) {
             int size = is.available();
             byte[] buffer = new byte[size];
@@ -202,5 +217,61 @@ public class MedicineAddingActivity extends AppCompatActivity implements OnTimeL
 
     public void setOnTimeListItemSelectionEvents(OnTimeListItemSelectionEvents onTimeListItemSelectionEvents) {
         this.onTimeListItemSelectionEvents = onTimeListItemSelectionEvents;
+    }
+
+    @Override
+    public void onTimeChanged(TimePicker view, int hourOfDay, int minute) {
+        medicineDose.setTime(new StringBuilder()
+                .append(typeCastedHour(hourOfDay))
+                .append(":")
+                .append(precedingZero(minute))
+                .append(" ")
+                .append(getConvention(hourOfDay))
+                .toString());
+    }
+
+    @NotNull
+    private String precedingZero(int minute) {
+        if (minute < 10) {
+            return Integer.toString(minute);
+        } else {
+            return "0"+minute;
+        }
+    }
+
+    @NotNull
+    @Contract(pure = true)
+    private String getConvention(int hourOfDay) {
+        if (hourOfDay > 12) {
+            return " PM";
+        } else if(hourOfDay == 0) {
+            return " AM";
+        } else {
+            return " AM";
+        }
+    }
+
+    @NotNull
+    private String typeCastedHour(int hourOfDay) {
+        if (hourOfDay > 12) {
+            return Integer.toString(hourOfDay-12);
+        } else if(hourOfDay == 0) {
+            return Integer.toString(12);
+        } else {
+            return Integer.toString(hourOfDay);
+        }
+    }
+
+    @Override
+    public void onCancel() {
+        timeDialogFragment.dismiss();
+    }
+
+    @Override
+    public void onSet(String dose) {
+        medicineDose.setDose(dose);
+        selectedMedication.set(position, medicineDose);
+        adapter.notifyDataSetChanged();
+        timeDialogFragment.dismiss();
     }
 }

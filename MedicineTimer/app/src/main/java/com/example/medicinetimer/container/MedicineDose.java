@@ -6,6 +6,8 @@ public class MedicineDose {
     private String time;
     private String dose;
 
+    public MedicineDose() { }
+
     public MedicineDose(String time, String dose) {
         this.time = time;
         this.dose = dose;
@@ -26,6 +28,10 @@ public class MedicineDose {
 
     public String getDose() {
         return "(Take : "+dose+")";
+    }
+
+    public Double getDoseCount() {
+        return Double.parseDouble(dose);
     }
 
     public void setDose(String dose) {
