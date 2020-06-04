@@ -16,24 +16,23 @@ import com.example.medicinetimer.listeners.OnTimeListClickEvents;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class TimeDoseRecyclerViewAdapter extends RecyclerView.Adapter<TimeDoseRecyclerViewAdapter.ViewHolder> {
 
     private static final String TAG = "TimeDoseRecyclerViewAda";
 
     private Context mContext;
-    private List<MedicineDose> mDoseTimeList = new ArrayList<>();
-    private List<String> mTimeList = new ArrayList<>();
+    private ArrayList<MedicineDose> mDoseTimeList = new ArrayList<>();
+    private ArrayList<String> mTimeList = new ArrayList<>();
 
     protected OnTimeListClickEvents onTimeListClickEvents;
 
-    public TimeDoseRecyclerViewAdapter(Context mContext, List<MedicineDose> mDoseTimeList) {
+    public TimeDoseRecyclerViewAdapter(Context mContext, ArrayList<MedicineDose> mDoseTimeList) {
         this.mContext = mContext;
         this.mDoseTimeList = mDoseTimeList;
     }
 
-    public TimeDoseRecyclerViewAdapter(List<String> mTimeList, Context mContext) {
+    public TimeDoseRecyclerViewAdapter(ArrayList<String> mTimeList, Context mContext) {
         this.mContext = mContext;
         this.mTimeList = mTimeList;
     }
@@ -74,6 +73,16 @@ public class TimeDoseRecyclerViewAdapter extends RecyclerView.Adapter<TimeDoseRe
         }
     }
 
+    public void updateTimeDoseList(ArrayList<MedicineDose> mDoseTimeList) {
+        this.mDoseTimeList = mDoseTimeList;
+        notifyDataSetChanged();
+    }
+
+    public void updateTimeList(ArrayList<String> mTimeList) {
+        this.mTimeList = mTimeList;
+        notifyDataSetChanged();
+    }
+
     public void clearData() {
         mDoseTimeList.clear();
     }
@@ -86,19 +95,19 @@ public class TimeDoseRecyclerViewAdapter extends RecyclerView.Adapter<TimeDoseRe
         this.mContext = mContext;
     }
 
-    public List<MedicineDose> getmDoseTimeList() {
+    public ArrayList<MedicineDose> getmDoseTimeList() {
         return mDoseTimeList;
     }
 
-    public void setmDoseTimeList(List<MedicineDose> mDoseTimeList) {
+    public void setmDoseTimeList(ArrayList<MedicineDose> mDoseTimeList) {
         this.mDoseTimeList = mDoseTimeList;
     }
 
-    public List<String> getmTimeList() {
+    public ArrayList<String> getmTimeList() {
         return mTimeList;
     }
 
-    public void setmTimeList(List<String> mTimeList) {
+    public void setmTimeList(ArrayList<String> mTimeList) {
         this.mTimeList = mTimeList;
     }
 

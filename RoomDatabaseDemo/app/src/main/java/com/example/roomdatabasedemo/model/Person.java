@@ -1,6 +1,7 @@
 package com.example.roomdatabasedemo.model;
 
 
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -9,10 +10,15 @@ import androidx.room.PrimaryKey;
 public class Person {
     @PrimaryKey(autoGenerate = true)
     int id;
+    @ColumnInfo(name = "name")
     String name;
+    @ColumnInfo(name = "email")
     String email;
+    @ColumnInfo(name = "number")
     String number;
+    @ColumnInfo(name = "pincode")
     String pincode;
+    @ColumnInfo(name = "city")
     String city;
 
     @Ignore

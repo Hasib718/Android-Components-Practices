@@ -20,8 +20,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medicinetimer.adapters.TimeDoseRecyclerViewAdapter;
+import com.example.medicinetimer.constants.Constants;
 import com.example.medicinetimer.container.Medicine;
 import com.example.medicinetimer.container.MedicineDose;
+import com.example.medicinetimer.database.MedicineDatabase;
 import com.example.medicinetimer.fragments.DaysDurationFragment;
 import com.example.medicinetimer.fragments.DaysIntervalFragment;
 import com.example.medicinetimer.fragments.ReminderDialogFragment;
@@ -30,7 +32,9 @@ import com.example.medicinetimer.listeners.OnDaysDurationPickerEvents;
 import com.example.medicinetimer.listeners.OnTimeDosePickerDialogActionButtonEvents;
 import com.example.medicinetimer.listeners.OnTimeListClickEvents;
 import com.example.medicinetimer.listeners.OnTimeListItemSelectionEvents;
+import com.example.medicinetimer.support.AppExecutors;
 import com.google.android.material.checkbox.MaterialCheckBox;
+import com.google.android.material.radiobutton.MaterialRadioButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
@@ -92,6 +96,47 @@ public class MedicineAddingActivity extends AppCompatActivity implements OnTimeL
         setReminderTime();
         setDuration();
         setDays();
+
+        if (getIntent() != null && getIntent().hasExtra(Constants.UPDATE_MEDICINE_INFO)) {
+            medicine = getIntent().getExtras().getParcelable(Constants.UPDATE_MEDICINE_INFO);
+            Log.d(TAG, "onCreate: " + medicine);
+
+            updateInfo();
+        }
+    }
+
+    private void updateInfo() {
+        medicineNameInput.setText(medicine.getName());
+        medicineTimeInput.setText(medicine.getMedicineDosesType());
+        adapter.updateTimeDoseList(medicine.getMedicineDoses());
+        medicineStartDateInput.setText(medicine.getStartingDay());
+        if (medicine.isNumberOfDays()) {
+            ((MaterialRadioButton) durationRadioGroup.getChildAt(1)).setChecked(medicine.isNumberOfDays());
+            medicineDaysDuration.setVisibility(View.VISIBLE);
+            medicineDaysDuration.setText(medicine.getDaysCount());
+        } else {
+            ((MaterialRadioButton) durationRadioGroup.getChildAt(0)).setChecked(medicine.isContinuous());
+        }
+        if (medicine.isSpecificDay()) {
+            ((MaterialRadioButton) daysRadioGroup.getChildAt(1)).setChecked(medicine.isSpecificDay());
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append(": ");
+            medicine.getSpecifiedDays().forEach((k, v) -> {
+                if (v) {
+                    stringBuilder.append(k.substring(0, 3))
+                            .append(", ");
+                }
+            });
+            stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
+            medicineSpecificDays.setVisibility(View.VISIBLE);
+            medicineSpecificDays.setText(stringBuilder);
+        } else if (medicine.isDaysInterval()) {
+            ((MaterialRadioButton) daysRadioGroup.getChildAt(2)).setChecked(medicine.isDaysInterval());
+            medicineDaysInterval.setVisibility(View.VISIBLE);
+            medicineDaysInterval.setText(medicine.getDaysIntervalCount());
+        } else {
+            ((MaterialRadioButton) daysRadioGroup.getChildAt(0)).setChecked(medicine.isEveryday());
+        }
     }
 
     private void setDays() {
@@ -148,9 +193,19 @@ public class MedicineAddingActivity extends AppCompatActivity implements OnTimeL
         LayoutInflater inflater = getLayoutInflater();
         final View view = inflater.inflate(R.layout.fragment_specified_days_selection, null);
         final GridLayout daysGrid = view.findViewById(R.id.daysGrid);
-
         final HashMap<String, Boolean> days = new HashMap<>(medicine.getSpecifiedDays());
-        for (int i=0; i<daysGrid.getChildCount(); i++) {
+
+        if (getIntent().hasExtra(Constants.UPDATE_MEDICINE_INFO)) {
+            for (int i = 0; i < daysGrid.getChildCount(); i++) {
+                ((MaterialCheckBox) daysGrid.getChildAt(i)).setChecked(medicine.getSpecifiedDays().get(((MaterialCheckBox) daysGrid.getChildAt(i)).getText().toString()));
+            }
+        } else {
+            for (int i = 0; i < daysGrid.getChildCount(); i++) {
+                ((MaterialCheckBox) daysGrid.getChildAt(i)).setChecked(days.get(((MaterialCheckBox) daysGrid.getChildAt(i)).getText().toString()));
+            }
+        }
+
+        for (int i = 0; i < daysGrid.getChildCount(); i++) {
             daysGrid.getChildAt(i).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -290,6 +345,10 @@ public class MedicineAddingActivity extends AppCompatActivity implements OnTimeL
 
         saveOption = menu.findItem(R.id.item_save);
 
+        if (getIntent().hasExtra(Constants.UPDATE_MEDICINE_INFO)) {
+            saveOption.setTitle("UPDATE");
+        }
+
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -305,12 +364,37 @@ public class MedicineAddingActivity extends AppCompatActivity implements OnTimeL
                 } else {
                     medicineNameInputLayout.setError(null);
                     medicine.setMedicineDoses(selectedMedication);
+                    medicine.setName(medicineNameInput.getText().toString());
+                    if (!getIntent().hasExtra(Constants.UPDATE_MEDICINE_INFO)) {
+                        medicine.setActivityState(true);
+                    }
+                    medicine.setMedicineDosesType(medicineTimeInput.getText().toString());
                 }
-                Log.d(TAG, "onOptionsItemSelected: "+medicine.toString());
+                Log.d(TAG, "onOptionsItemSelected: " + medicine.toString());
 
-                Intent intent = new Intent(MedicineAddingActivity.this, MainActivity.class);
-                intent.putExtra("medicine", medicine);
-                startActivity(intent);
+                if (getIntent().hasExtra(Constants.UPDATE_MEDICINE_INFO)) {
+                    AppExecutors
+                            .getInstance()
+                            .diskIO()
+                            .execute(() -> {
+                                MedicineDatabase
+                                        .getInstance(MedicineAddingActivity.this)
+                                        .medicineDao()
+                                        .updateMedicine(medicine);
+                            });
+                } else {
+                    AppExecutors
+                            .getInstance()
+                            .diskIO()
+                            .execute(() -> {
+                                MedicineDatabase
+                                        .getInstance(MedicineAddingActivity.this)
+                                        .medicineDao()
+                                        .insertMedicine(medicine);
+                            });
+                }
+
+                startActivity(new Intent(MedicineAddingActivity.this, MainActivity.class));
         }
 
         return super.onOptionsItemSelected(item);
@@ -329,8 +413,8 @@ public class MedicineAddingActivity extends AppCompatActivity implements OnTimeL
                 medicineTimeInput.setText(selected);
                 dialogFragment.dismiss();
 
-                retrieveTimeDoseTableData(selected);
-                adapter.notifyDataSetChanged();
+                selectedMedication = retrieveTimeDoseTableData(selected);
+                adapter.updateTimeDoseList(selectedMedication);
             }
         }
     }
@@ -347,7 +431,8 @@ public class MedicineAddingActivity extends AppCompatActivity implements OnTimeL
         timeDialogFragment.setOnTimeDosePickerDialogActionButtonEvents(MedicineAddingActivity.this);
     }
 
-    private void retrieveTimeDoseTableData(@NotNull String selected) {
+    private ArrayList<MedicineDose> retrieveTimeDoseTableData(@NotNull String selected) {
+        ArrayList<MedicineDose> data = new ArrayList<>();
         try (InputStream is = getAssets().open("Time Dose Table.json")) {
             int size = is.available();
             byte[] buffer = new byte[size];
@@ -363,19 +448,20 @@ public class MedicineAddingActivity extends AppCompatActivity implements OnTimeL
                 array = object.getJSONArray("intervals");
             }
 
-            selectedMedication.clear();
             for (int j = 0; j < array.length(); j++) {
                 if (array.getJSONObject(j).has(selected)) {
                     for (int i = 0; i < array.getJSONObject(j).getJSONArray(selected).length(); i++) {
-                        selectedMedication.add(new MedicineDose(array.getJSONObject(j).getJSONArray(selected).getJSONObject(i).getString("time"),
+                        data.add(new MedicineDose(array.getJSONObject(j).getJSONArray(selected).getJSONObject(i).getString("time"),
                                 array.getJSONObject(j).getJSONArray(selected).getJSONObject(i).getDouble("dose")));
                     }
                 }
             }
-            Log.d(TAG, "retrieveTimeDoseTableData: " + selectedMedication.toString());
+            Log.d(TAG, "retrieveTimeDoseTableData: " + data.toString());
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
+
+        return data;
     }
 
     public void setOnTimeListItemSelectionEvents(OnTimeListItemSelectionEvents onTimeListItemSelectionEvents) {
@@ -405,7 +491,7 @@ public class MedicineAddingActivity extends AppCompatActivity implements OnTimeL
     @NotNull
     @Contract(pure = true)
     private String getConvention(int hourOfDay) {
-        if (hourOfDay > 12) {
+        if (hourOfDay >= 12) {
             return " PM";
         } else if (hourOfDay == 0) {
             return " AM";

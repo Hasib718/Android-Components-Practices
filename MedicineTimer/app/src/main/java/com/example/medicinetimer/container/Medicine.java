@@ -5,25 +5,62 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.RequiresApi;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
+@Entity(tableName = "medicine")
 public class Medicine implements Parcelable {
-    private String name;
-    private boolean activityState;
-    private String times;
-    private boolean continuous;
-    private boolean numberOfDays;
-    private String daysCount;
-    private String startingDay;
-    private boolean everyday;
-    private boolean specificDay;
-    private boolean daysInterval;
-    private HashMap<String, Boolean> specifiedDays = new HashMap<>();
-    private String daysIntervalCount;
-    private List<MedicineDose> medicineDoses;
+    @PrimaryKey(autoGenerate = true)
+    private int id;
 
+    @ColumnInfo(name = "name")
+    private String name;
+
+    @ColumnInfo(name = "activeState")
+    private boolean activityState;
+
+    @ColumnInfo(name = "times")
+    private String times;
+
+    @ColumnInfo(name = "continuous")
+    private boolean continuous;
+
+    @ColumnInfo(name = "numberOfDays")
+    private boolean numberOfDays;
+
+    @ColumnInfo(name = "daysCount")
+    private String daysCount;
+
+    @ColumnInfo(name = "startingDay")
+    private String startingDay;
+
+    @ColumnInfo(name = "everyday")
+    private boolean everyday;
+
+    @ColumnInfo(name = "specificDay")
+    private boolean specificDay;
+
+    @ColumnInfo(name = "daysInterval")
+    private boolean daysInterval;
+
+    @ColumnInfo(name = "specifiedDays")
+    private HashMap<String, Boolean> specifiedDays = new HashMap<>();
+
+    @ColumnInfo(name = "daysIntervalCount")
+    private String daysIntervalCount;
+
+    @ColumnInfo(name = "medicineDosesType")
+    private String medicineDosesType;
+
+    @ColumnInfo(name = "medicineDoses")
+    private ArrayList<MedicineDose> medicineDoses;
+
+    @Ignore
     public Medicine() {
         this.specifiedDays.put("Sunday", false);
         this.specifiedDays.put("Monday", false);
@@ -34,23 +71,27 @@ public class Medicine implements Parcelable {
         this.specifiedDays.put("Saturday", false);
     }
 
-    public Medicine(String name, boolean activityState, String times, String daysCount, String startingDay, List<MedicineDose> medicineDoses) {
+    public Medicine(int id, String name, boolean activityState, String times, boolean continuous, boolean numberOfDays, String daysCount,
+                    String startingDay, boolean everyday, boolean specificDay, boolean daysInterval, HashMap<String, Boolean> specifiedDays,
+                    String daysIntervalCount, String medicineDosesType, ArrayList<MedicineDose> medicineDoses) {
+        this.id = id;
         this.name = name;
         this.activityState = activityState;
         this.times = times;
+        this.continuous = continuous;
+        this.numberOfDays = numberOfDays;
         this.daysCount = daysCount;
         this.startingDay = startingDay;
+        this.everyday = everyday;
+        this.specificDay = specificDay;
+        this.daysInterval = daysInterval;
+        this.specifiedDays = specifiedDays;
+        this.daysIntervalCount = daysIntervalCount;
+        this.medicineDosesType = medicineDosesType;
         this.medicineDoses = medicineDoses;
-
-        this.specifiedDays.put("Sunday", false);
-        this.specifiedDays.put("Monday", false);
-        this.specifiedDays.put("Tuesday", false);
-        this.specifiedDays.put("Wednesday", false);
-        this.specifiedDays.put("Thursday", false);
-        this.specifiedDays.put("Friday", false);
-        this.specifiedDays.put("Saturday", false);
     }
 
+    @Ignore
     public Medicine(String name, boolean activityState, String times, String daysCount, String startingDay) {
         this.name = name;
         this.activityState = activityState;
@@ -67,7 +108,9 @@ public class Medicine implements Parcelable {
         this.specifiedDays.put("Saturday", false);
     }
 
+    @Ignore
     protected Medicine(Parcel in) {
+        id = in.readInt();
         name = in.readString();
         activityState = in.readBoolean();
         times = in.readString();
@@ -78,7 +121,18 @@ public class Medicine implements Parcelable {
         everyday = in.readBoolean();
         specificDay = in.readBoolean();
         daysInterval = in.readBoolean();
+        specifiedDays = in.readHashMap(HashMap.class.getClassLoader());
         daysIntervalCount = in.readString();
+        medicineDosesType = in.readString();
+        medicineDoses = in.readArrayList(MedicineDose.class.getClassLoader());
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -177,25 +231,35 @@ public class Medicine implements Parcelable {
         this.startingDay = startingDay;
     }
 
-    public List<MedicineDose> getMedicineDoses() {
+    public String getMedicineDosesType() {
+        return medicineDosesType;
+    }
+
+    public void setMedicineDosesType(String medicineDosesType) {
+        this.medicineDosesType = medicineDosesType;
+    }
+
+    public ArrayList<MedicineDose> getMedicineDoses() {
         return medicineDoses;
     }
 
-    public void setMedicineDoses(List<MedicineDose> medicineDoses) {
+    public void setMedicineDoses(ArrayList<MedicineDose> medicineDoses) {
         this.medicineDoses = medicineDoses;
 
         StringBuilder stringBuilder = new StringBuilder();
-        for (int i=0; i<this.medicineDoses.size(); i++) {
+        for (int i = 0; i < this.medicineDoses.size(); i++) {
             stringBuilder.append(this.medicineDoses.get(i).getTime())
                     .append(", ");
         }
+        stringBuilder.delete(stringBuilder.length() - 2, stringBuilder.length() - 1);
         times = stringBuilder.toString();
     }
 
     @Override
     public String toString() {
         return "Medicine{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", activityState=" + activityState +
                 ", times='" + times + '\'' +
                 ", continuous=" + continuous +
@@ -207,6 +271,7 @@ public class Medicine implements Parcelable {
                 ", daysInterval=" + daysInterval +
                 ", specifiedDays=" + specifiedDays +
                 ", daysIntervalCount='" + daysIntervalCount + '\'' +
+                ", medicineDosesType='" + medicineDosesType + '\'' +
                 ", medicineDoses=" + medicineDoses +
                 '}';
     }
@@ -231,6 +296,7 @@ public class Medicine implements Parcelable {
     @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
         dest.writeString(name);
         dest.writeBoolean(activityState);
         dest.writeString(times);
@@ -243,6 +309,7 @@ public class Medicine implements Parcelable {
         dest.writeBoolean(daysInterval);
         dest.writeMap(specifiedDays);
         dest.writeString(daysIntervalCount);
+        dest.writeString(medicineDosesType);
         dest.writeList(medicineDoses);
     }
 }

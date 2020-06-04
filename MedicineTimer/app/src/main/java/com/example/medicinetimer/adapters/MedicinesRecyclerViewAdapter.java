@@ -17,18 +17,18 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textview.MaterialTextView;
 
-import java.util.List;
+import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class MedicinesRecyclerViewAdapter extends RecyclerView.Adapter<MedicinesRecyclerViewAdapter.ViewHolder> {
 
     private static final String TAG = "RecyclerViewAdapter";
 
-    private List<Medicine> mMedicines;
+    private ArrayList<Medicine> mMedicines;
     private Context mContext;
 
     private OnMedicineListClickEvents medicineListClickEvents;
 
-    public RecyclerViewAdapter(Context mContext, List<Medicine> mMedicines) {
+    public MedicinesRecyclerViewAdapter(Context mContext, ArrayList<Medicine> mMedicines) {
         this.mMedicines = mMedicines;
         this.mContext = mContext;
     }
@@ -46,13 +46,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.medicineTime.setText(mMedicines.get(position).getTimes());
         holder.activityState.setChecked(mMedicines.get(position).isActivityState());
 
-        holder.nameTimeLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: "+position);
+        holder.nameTimeLayout.setOnClickListener(v -> {
+            Log.d(TAG, "onClick: " + position);
 
-                medicineListClickEvents.onMedicineClickListener(position, mMedicines.get(position));
-            }
+            medicineListClickEvents.onMedicineClickListener(position, mMedicines.get(position));
         });
     }
 
@@ -63,6 +60,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     public void setMedicineListClickEvents(OnMedicineListClickEvents medicineListClickEvents) {
         this.medicineListClickEvents = medicineListClickEvents;
+    }
+
+    public void updateList(ArrayList<Medicine> medicines) {
+        mMedicines = medicines;
+        notifyDataSetChanged();
+    }
+
+    public ArrayList<Medicine> getList() {
+        return mMedicines;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

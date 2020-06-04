@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
@@ -20,19 +19,19 @@ import com.example.medicinetimer.adapters.TimeDoseRecyclerViewAdapter;
 import com.example.medicinetimer.listeners.OnTimeListClickEvents;
 import com.example.medicinetimer.listeners.OnTimeListItemSelectionEvents;
 
-import java.util.List;
+import java.util.ArrayList;
 
 public class ReminderDialogFragment extends AppCompatDialogFragment {
 
     private static final String TAG = "ReminderDialogFragment";
 
     private Context mContext;
-    private List<String> mTimeList;
+    private ArrayList<String> mTimeList;
 
     private RecyclerView timeTableRecyclerView;
     private TimeDoseRecyclerViewAdapter adapter;
 
-    public ReminderDialogFragment(Context mContext, List<String> mTimeList) {
+    public ReminderDialogFragment(Context mContext, ArrayList<String> mTimeList) {
         this.mContext = mContext;
         this.mTimeList = mTimeList;
     }
@@ -47,7 +46,7 @@ public class ReminderDialogFragment extends AppCompatDialogFragment {
 
         ((MedicineAddingActivity) getActivity()).setOnTimeListItemSelectionEvents(new OnTimeListItemSelectionEvents() {
             @Override
-            public void onItemSelectedListener(List<String> timeTable) {
+            public void onItemSelectedListener(ArrayList<String> timeTable) {
                 mTimeList.clear();
                 adapter.notifyDataSetChanged();
 
