@@ -57,7 +57,7 @@
         android:textColor="@color/Black"
         android:textSize="25dp"
         android:layout_marginTop="10dp"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="5dp"
         android:background="@android:color/transparent"
         android:gravity="center"
         android:inputType="number"/>
@@ -71,7 +71,7 @@
         android:src="@drawable/round_add_circle_outline_24"
         android:background="@color/White"
         android:layout_marginTop="5dp"
-        android:layout_marginStart="10dp" />
+        android:layout_marginStart="5dp" />
 
     <com.google.android.material.button.MaterialButton
         android:layout_width="wrap_content"

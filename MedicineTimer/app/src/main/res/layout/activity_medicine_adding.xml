@@ -243,11 +243,12 @@
                     android:id="@+id/numberOfDaysDuration"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/radioGroup1"
-                    android:text="30"
+                    android:text="7"
                     android:textSize="20sp"
                     android:layout_marginStart="180dp"
                     android:layout_marginTop="58dp"
-                    android:gravity="center"/>
+                    android:gravity="center"
+                    android:visibility="invisible"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -283,23 +284,49 @@
                         android:layout_height="wrap_content"
                         android:text="Every Day"
                         android:textSize="15sp"
-                        android:id="@+id/everydayRadioButton1" />
+                        android:id="@+id/everydayRadioButton" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Specific day of week"
                         android:textSize="15sp"
-                        android:id="@+id/specificRadioButton1" />
+                        android:id="@+id/specificRadioButton" />
 
                     <com.google.android.material.radiobutton.MaterialRadioButton
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Days Interval"
                         android:textSize="15sp"
-                        android:id="@+id/intervalRadioButton1" />
+                        android:id="@+id/intervalRadioButton" />
 
                 </RadioGroup>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/specificDays"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/radioGroup2"
+                    android:text="Sun, Mon"
+                    android:textSize="15sp"
+                    android:layout_marginStart="210dp"
+                    android:layout_marginTop="61dp"
+                    android:gravity="center"
+                    android:visibility="invisible"/>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/daysInterval"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/radioGroup2"
+                    android:text="Every 2 days"
+                    android:textSize="15sp"
+                    android:layout_marginStart="155dp"
+                    android:layout_marginTop="110dp"
+                    android:gravity="center"
+                    android:visibility="invisible"/>
 
                 <View
                     android:layout_width="match_parent"

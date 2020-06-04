@@ -1,5 +1,6 @@
 package com.example.medicinetimer.fragments;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -13,9 +14,10 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.appcompat.widget.AppCompatImageButton;
 
 import com.example.medicinetimer.R;
-import com.example.medicinetimer.listeners.OnPickerDialogActionButtonEvents;
+import com.example.medicinetimer.listeners.OnDaysDurationPickerEvents;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textview.MaterialTextView;
 
 public class DaysDurationFragment extends AppCompatDialogFragment {
 
@@ -27,8 +29,11 @@ public class DaysDurationFragment extends AppCompatDialogFragment {
     private TextInputEditText daysCount;
     private MaterialButton cancelButton, setButton;
     private AppCompatImageButton minusButton, plusButton;
+    private MaterialTextView title;
 
-    private OnPickerDialogActionButtonEvents onPickerDialogActionButtonEvents;
+    private OnDaysDurationPickerEvents onDaysDurationPickerEvents;
+
+    public DaysDurationFragment() { }
 
     public DaysDurationFragment(Context mContext, String days) {
         this.mContext = mContext;
@@ -44,58 +49,65 @@ public class DaysDurationFragment extends AppCompatDialogFragment {
         initViews(view);
         setDoseCounter();
         setActionButtons();
+
+        final AlertDialog dialog = new AlertDialog.Builder(mContext)
+                .setView(view)
+                .setCancelable(true)
+                .create();
+
+        return dialog;
     }
 
-    public OnPickerDialogActionButtonEvents setOnPickerDialogActionButtonEvents(OnPickerDialogActionButtonEvents onPickerDialogActionButtonEvents) {
-        this.onPickerDialogActionButtonEvents = onPickerDialogActionButtonEvents;
+    public void setOnDaysDurationPickerEvents(OnDaysDurationPickerEvents onDaysDurationPickerEvents) {
+        this.onDaysDurationPickerEvents = onDaysDurationPickerEvents;
     }
 
     private void setActionButtons() {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onPickerDialogActionButtonEvents.onCancel();
+                onDaysDurationPickerEvents.onDaysPickerCancel(DaysDurationFragment.this.getClass().getSimpleName());
             }
         });
 
         setButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onPickerDialogActionButtonEvents.onSet();
+                onDaysDurationPickerEvents.onDaysPickerSet(daysCount.getText().toString(), DaysDurationFragment.this.getClass().getSimpleName());
             }
         });
     }
 
     private void setDoseCounter() {
-        doseCount.setText(String.format("%.2f", medicineDose.getDoseCount()));
+        daysCount.setText(days);
 
         minusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Double dose = Double.parseDouble(doseCount.getText().toString());
-                dose -= 0.25;
+                Integer days = Integer.parseInt(daysCount.getText().toString());
+                days -= 1;
 
-                if (dose < 0) {
-                    dose = 0.00;
-                    doseCount.setText(String.format("%.2f", dose));
-                    Toast.makeText(mContext, "Dose can't be less then "+dose, Toast.LENGTH_SHORT).show();
+                if (days < 0) {
+                    days = 0;
+                    daysCount.setText(String.format("%d", days));
+                    Toast.makeText(mContext, "Days can't be less then "+days, Toast.LENGTH_SHORT).show();
                 } else {
-                    doseCount.setText(String.format("%.2f", dose));
+                    daysCount.setText(String.format("%d", days));
                 }
             }
         });
         plusButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Double dose = Double.parseDouble(doseCount.getText().toString());
-                dose += 0.25;
+                Integer days = Integer.parseInt(daysCount.getText().toString());
+                days += 1;
 
-                if (dose > 100) {
-                    dose = 100.00;
-                    doseCount.setText(String.format("%.2f", dose));
-                    Toast.makeText(mContext, "Dose can't be less then "+dose, Toast.LENGTH_SHORT).show();
+                if (days > 365) {
+                    days = 365;
+                    daysCount.setText(String.format("%d", days));
+                    Toast.makeText(mContext, "Dose can't be greater then "+days, Toast.LENGTH_SHORT).show();
                 } else {
-                    doseCount.setText(String.format("%.2f", dose));
+                    daysCount.setText(String.format("%d", days));
                 }
             }
         });
@@ -108,5 +120,6 @@ public class DaysDurationFragment extends AppCompatDialogFragment {
         plusButton = view.findViewById(R.id.plusButton);
         cancelButton = view.findViewById(R.id.cancelButton);
         setButton = view.findViewById(R.id.setButton);
+        title = view.findViewById(R.id.title);
     }
 }

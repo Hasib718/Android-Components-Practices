@@ -18,7 +18,7 @@ import androidx.appcompat.widget.AppCompatImageButton;
 
 import com.example.medicinetimer.R;
 import com.example.medicinetimer.container.MedicineDose;
-import com.example.medicinetimer.listeners.OnPickerDialogActionButtonEvents;
+import com.example.medicinetimer.listeners.OnTimeDosePickerDialogActionButtonEvents;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textview.MaterialTextView;
 
@@ -36,7 +36,7 @@ public class TimeDosePickerDialogFragment extends AppCompatDialogFragment {
     private MaterialTextView doseCount;
     private MaterialButton cancelButton, setButton;
 
-    private OnPickerDialogActionButtonEvents onPickerDialogActionButtonEvents;
+    private OnTimeDosePickerDialogActionButtonEvents onTimeDosePickerDialogActionButtonEvents;
 
     public TimeDosePickerDialogFragment(Context mContext, MedicineDose medicineDose) {
         this.mContext = mContext;
@@ -62,22 +62,22 @@ public class TimeDosePickerDialogFragment extends AppCompatDialogFragment {
         return dialog;
     }
 
-    public void setOnPickerDialogActionButtonEvents(OnPickerDialogActionButtonEvents onPickerDialogActionButtonEvents) {
-        this.onPickerDialogActionButtonEvents = onPickerDialogActionButtonEvents;
+    public void setOnTimeDosePickerDialogActionButtonEvents(OnTimeDosePickerDialogActionButtonEvents onTimeDosePickerDialogActionButtonEvents) {
+        this.onTimeDosePickerDialogActionButtonEvents = onTimeDosePickerDialogActionButtonEvents;
     }
 
     private void setActionButtons() {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onPickerDialogActionButtonEvents.onCancel();
+                onTimeDosePickerDialogActionButtonEvents.onTimeDosePickerCancel();
             }
         });
 
         setButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onPickerDialogActionButtonEvents.onSet(doseCount.getText().toString());
+                onTimeDosePickerDialogActionButtonEvents.onTimeDosePickerSet(doseCount.getText().toString());
             }
         });
     }
@@ -109,7 +109,7 @@ public class TimeDosePickerDialogFragment extends AppCompatDialogFragment {
                 if (dose > 100) {
                     dose = 100.00;
                     doseCount.setText(String.format("%.2f", dose));
-                    Toast.makeText(mContext, "Dose can't be less then "+dose, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mContext, "Dose can't be greater then "+dose, Toast.LENGTH_SHORT).show();
                 } else {
                     doseCount.setText(String.format("%.2f", dose));
                 }

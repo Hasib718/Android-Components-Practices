@@ -43,7 +43,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         holder.medicineName.setText(mMedicines.get(position).getName());
-        holder.medicineTime.setText(mMedicines.get(position).getTimes().get(position));
+        holder.medicineTime.setText(mMedicines.get(position).getTimes());
         holder.activityState.setChecked(mMedicines.get(position).isActivityState());
 
         holder.nameTimeLayout.setOnClickListener(new View.OnClickListener() {

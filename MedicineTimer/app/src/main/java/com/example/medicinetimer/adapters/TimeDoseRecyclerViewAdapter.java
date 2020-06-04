@@ -50,7 +50,6 @@ public class TimeDoseRecyclerViewAdapter extends RecyclerView.Adapter<TimeDoseRe
         holder.time.setText(mDoseTimeList.get(position).getTime());
         holder.dose.setText(mDoseTimeList.get(position).getDose());
 
-        Log.d(TAG, "onBindViewHolder: " + mDoseTimeList.size());
         if (position == mDoseTimeList.size() - 1) {
             holder.underlineView.setVisibility(View.GONE);
         } else {
@@ -60,6 +59,7 @@ public class TimeDoseRecyclerViewAdapter extends RecyclerView.Adapter<TimeDoseRe
         holder.timeDoseLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d(TAG, "onClick: "+position);
                 onTimeListClickEvents.onTimeDoseClickListener(position, mDoseTimeList.get(position));
             }
         });

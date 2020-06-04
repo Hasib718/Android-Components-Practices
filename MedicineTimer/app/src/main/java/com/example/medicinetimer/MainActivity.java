@@ -15,7 +15,6 @@ import com.example.medicinetimer.listeners.OnMedicineListClickEvents;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements OnMedicineListClickEvents {
@@ -24,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements OnMedicineListCli
 
     private FloatingActionButton medicineAddingButton;
 
+    private RecyclerView medicineList;
+    private RecyclerViewAdapter adapter;
     private List<Medicine> medicines = new ArrayList<>();
 
     @Override
@@ -43,10 +44,10 @@ public class MainActivity extends AppCompatActivity implements OnMedicineListCli
     }
 
     private void initRecyclerView() {
-        medicines.add(new Medicine("Test", true, new ArrayList<String>(Arrays.asList("8:00PM", "9:00PM")), "WEd", "Today"));
+        medicines.add(new Medicine("Test", true, "8:00PM, 9:00PM", "WEd", "Today"));
 
-        RecyclerView medicineList = findViewById(R.id.medicineList);
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(this, medicines);
+        medicineList = findViewById(R.id.medicineList);
+        adapter = new RecyclerViewAdapter(this, medicines);
         medicineList.setAdapter(adapter);
         medicineList.setLayoutManager(new LinearLayoutManager(this));
 
