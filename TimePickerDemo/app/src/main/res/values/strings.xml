@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">TimePicker Demo</string>
+    <string name="time">time</string>
+    <string name="open_time_picker">open time picker</string>
+</resources>

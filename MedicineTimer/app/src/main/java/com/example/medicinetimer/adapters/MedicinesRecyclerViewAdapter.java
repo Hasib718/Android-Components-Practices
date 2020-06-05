@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -12,7 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.medicinetimer.R;
 import com.example.medicinetimer.container.Medicine;
+import com.example.medicinetimer.database.MedicineDatabase;
 import com.example.medicinetimer.listeners.OnMedicineListClickEvents;
+import com.example.medicinetimer.support.AppExecutors;
 import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 import com.google.android.material.textview.MaterialTextView;
@@ -85,6 +88,17 @@ public class MedicinesRecyclerViewAdapter extends RecyclerView.Adapter<Medicines
             activityState = itemView.findViewById(R.id.medicineActivityState);
             medicineLayout = itemView.findViewById(R.id.medicineLayout);
             nameTimeLayout = itemView.findViewById(R.id.nameTimeLayout);
+            activityState.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) {
+                    mMedicines.get(getAdapterPosition()).setActivityState(isChecked);
+                } else {
+                    mMedicines.get(getAdapterPosition()).setActivityState(isChecked);
+                }
+
+                AppExecutors.getInstance().diskIO().execute(() -> {
+                    MedicineDatabase.getInstance(mContext).medicineDao().updateMedicine(mMedicines.get(getAdapterPosition()));
+                });
+            });
         }
     }
 }
