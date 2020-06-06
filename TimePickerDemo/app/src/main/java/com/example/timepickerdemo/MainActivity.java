@@ -1,9 +1,7 @@
 package com.example.timepickerdemo;
 
 import android.app.TimePickerDialog;
-import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -11,8 +9,8 @@ import android.widget.TimePicker;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
-import java.text.ParseException;
-import java.util.Date;
+import java.text.DateFormat;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener {
 
@@ -34,12 +32,13 @@ public class MainActivity extends AppCompatActivity implements TimePickerDialog.
 
     @Override
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        try {
-            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("hh:mm aa");
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 0);
 
-            ((TextView) findViewById(R.id.textView)).setText(simpleDateFormat.format(new SimpleDateFormat("hh:mm").parse(hourOfDay+":"+minute)));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        String time = DateFormat.getTimeInstance(DateFormat.SHORT).format(calendar.getTime());
+
+        ((TextView) findViewById(R.id.textView)).setText(time);
     }
 }
