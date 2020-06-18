@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">ZafuRust</string>
+    <string name="extraction">Extraction</string>
+    <string name="retrieve">Retrieve</string>
+    <string name="image_sharing">Image Sharing</string>
+    <string name="copy">Copy</string>
+    <string name="sample">Sample</string>
+    <string name="choosing">Choose</string>
+    <string name="paste">Paste</string>
+    <string name="clear_text">Clear</string>
+    <string name="image_code">Image Code</string>
+    <string name="process">Process</string>
+</resources>
