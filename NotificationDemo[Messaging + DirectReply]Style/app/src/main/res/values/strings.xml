@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Notification Demo</string>
+    <string name="title">Title</string>
+    <string name="message">Message</string>
+    <string name="send_on_channel_1">Send on channel 1</string>
+    <string name="send_on_channel_2">Send on channel 2</string>
+    <string name="testing_notification">testing notification</string>
+    <string name="testing_notification_2">testing notification 2</string>
+    <string name="long_dummy_text">Sexual reproduction in eukaryotes is a process whereby organisms produce offspring that combine genetic traits from both parents.
+        Chromosomes are passed on from one generation to the next in this process. Each cell in the offspring has half the chromosomes of the mother and half of the father.[20]
+        Genetic traits are contained within the deoxyribonucleic acid (DNA) of chromosomes—by combining one of each type of chromosomes from each parent, an organism is formed
+        containing a doubled set of chromosomes. This double-chromosome stage is called "diploid", while the single-chromosome stage is "haploid". Diploid organisms can, in turn,
+        form haploid cells (gametes) that randomly contain one of each of the chromosome pairs, via meiosis.[21] Meiosis also involves a stage of chromosomal crossover, in which
+        regions of DNA are exchanged between matched types of chromosomes, to form a new pair of mixed chromosomes. Crossing over and fertilization (the recombining of single sets
+        of chromosomes to make a new diploid) result in the new organism containing a different set of genetic traits from either parent.</string>
+</resources>
