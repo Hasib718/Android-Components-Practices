@@ -1,0 +1,8 @@
+/*
+ * Created by S M Al Hasib on 7/11/20 2:19 PM
+ * Copyright (c) 2020 . All rights reserved.
+ * Last modified 7/11/20 2:16 PM
+ */
+
+include ':app'
+rootProject.name = "AppBar"
