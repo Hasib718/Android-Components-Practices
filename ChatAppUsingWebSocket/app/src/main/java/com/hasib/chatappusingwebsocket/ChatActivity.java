@@ -31,12 +31,11 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.WebSocket;
 import okhttp3.WebSocketListener;
-import okio.ByteString;
 
 public class ChatActivity extends AppCompatActivity implements TextWatcher {
 
     private static final int IMAGE_REQUEST_ID = 1001;
-    private final String SERVER_PATH = "ws://echo.websocket.org";
+    private final String SERVER_PATH = "ws://192.168.0.7:3000";
     private String name;
     private WebSocket webSocket;
     private EditText messageEdit;
@@ -118,6 +117,8 @@ public class ChatActivity extends AppCompatActivity implements TextWatcher {
                 jsonObject.put("isSent", true);
                 messageAdapter.addItem(jsonObject);
 
+                recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
+
                 resetMessageEdit();
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -174,16 +175,19 @@ public class ChatActivity extends AppCompatActivity implements TextWatcher {
 
 
     private class SocketListener extends WebSocketListener {
+
         @Override
-        public void onMessage(@NotNull WebSocket webSocket, @NotNull ByteString bytes) {
-            super.onMessage(webSocket, bytes);
+        public void onMessage(@NotNull WebSocket webSocket, @NotNull String text) {
+            super.onMessage(webSocket, text);
 
             runOnUiThread(() -> {
                 try {
-                    JSONObject jsonObject = new JSONObject();
+                    JSONObject jsonObject = new JSONObject(text);
                     jsonObject.put("isSent", false);
 
                     messageAdapter.addItem(jsonObject);
+
+                    recyclerView.smoothScrollToPosition(messageAdapter.getItemCount() - 1);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
