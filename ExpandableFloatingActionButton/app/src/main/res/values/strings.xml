@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ExpandableFloatingActionButton</string>
+    <string name="add">Add</string>
+    <string name="make_a_call">Make a call</string>
+    <string name="send_a_message">Send a message</string>
+    <string name="send_a_email">Send a email</string>
+</resources>
