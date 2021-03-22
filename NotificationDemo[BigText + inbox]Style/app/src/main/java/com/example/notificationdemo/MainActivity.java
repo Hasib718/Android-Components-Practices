@@ -15,8 +15,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
 import androidx.core.app.TaskStackBuilder;
 
-import static com.example.notificationdemo.NotificationDemo.CHANNEL_1_ID;
-import static com.example.notificationdemo.NotificationDemo.CHANNEL_2_ID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -61,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
         Bitmap largeIcon = BitmapFactory.decodeResource(getResources(), R.drawable.marshmello);
 
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_1_ID)
+        Notification notification = new NotificationCompat.Builder(this, NotificationDemo.CHANNEL_1_ID)
                 .setSmallIcon(R.drawable.ic_one)
                 .setContentTitle(editTextTitle.getText().toString())
                 .setContentText(editTextMessage.getText().toString())
@@ -83,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendOnChannel2(View v) {
-        Notification notification = new NotificationCompat.Builder(this, CHANNEL_2_ID)
+        Notification notification = new NotificationCompat.Builder(this, NotificationDemo.CHANNEL_2_ID)
                 .setSmallIcon(R.drawable.ic_two)
                 .setContentTitle(editTextTitle.getText().toString())
                 .setContentText(editTextMessage.getText().toString())

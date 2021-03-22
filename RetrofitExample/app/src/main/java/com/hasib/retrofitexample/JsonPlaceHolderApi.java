@@ -42,6 +42,7 @@ public interface JsonPlaceHolderApi {
 
     @POST("posts")
     Call<Post> createPost(@Body Post post);
+
     @FormUrlEncoded
     @POST("posts")
     Call<Post> createPost(

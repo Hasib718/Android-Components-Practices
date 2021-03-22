@@ -85,6 +85,7 @@ public class MainActivity extends AppCompatActivity {
                     break;
             }
 
+            sb.append("\nID:- "+cursor.getString(cursor.getColumnIndex("_id")));
             sb.append("\nPhone Number: " + phNumber + "\nCallType: " + dir + "\nCall Date: " + dateString + "\nCall Duration: " + callDuration);
             sb.append("\n-------------------------------");
         }
