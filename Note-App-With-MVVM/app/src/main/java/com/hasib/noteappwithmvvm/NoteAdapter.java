@@ -1,5 +1,6 @@
 package com.hasib.noteappwithmvvm;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +16,18 @@ import com.hasib.noteappwithmvvm.model.Note;
 import org.jetbrains.annotations.NotNull;
 
 public class NoteAdapter extends ListAdapter<Note, NoteAdapter.NoteHolder> {
+    public static final String TAG = NoteAdapter.class.getSimpleName();
+    
     private static final DiffUtil.ItemCallback<Note> DIFF_CALLBACK = new DiffUtil.ItemCallback<Note>() {
         @Override
         public boolean areItemsTheSame(@NonNull @NotNull Note oldItem, @NonNull @NotNull Note newItem) {
+            Log.d(TAG, "areItemsTheSame: item");
             return oldItem.getId() == newItem.getId();
         }
 
         @Override
         public boolean areContentsTheSame(@NonNull @NotNull Note oldItem, @NonNull @NotNull Note newItem) {
+            Log.d(TAG, "areContentsTheSame: Content");
             return oldItem.getTitle().equals(newItem.getTitle()) &&
                     oldItem.getDescription().equals(newItem.getDescription()) &&
                     oldItem.getPriority() == newItem.getPriority();
@@ -43,6 +48,7 @@ public class NoteAdapter extends ListAdapter<Note, NoteAdapter.NoteHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull @NotNull NoteAdapter.NoteHolder holder, int position) {
+        Log.d(TAG, "onBindViewHolder: bind");
         Note note = getItem(position);
         holder.title.setText(note.getTitle());
         holder.description.setText(note.getDescription());
