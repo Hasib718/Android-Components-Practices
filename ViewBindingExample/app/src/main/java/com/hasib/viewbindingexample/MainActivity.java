@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.hasib.viewbindingexample.databinding.ActivityMainBinding;
 
 public class MainActivity extends AppCompatActivity {
+
     private ActivityMainBinding binding;
 
     @Override

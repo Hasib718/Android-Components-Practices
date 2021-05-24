@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="8dp">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/food_image"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:src="@drawable/dog1" />
+
+        <TextView
+            android:id="@+id/food_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@string/title"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large" />
+
+        <TextView
+            android:id="@+id/food_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/price" />
+
+        <TextView
+            android:id="@+id/food_quantity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/quantity" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/countTitle"
+            android:text="Buy Item Counter"
+            android:textAlignment="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/item_add"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_add_24"/>
+            <EditText
+                android:id="@+id/item_count"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:text="@string/_0"
+                android:textAlignment="center"
+                android:background="@null"
+                android:inputType="numberDecimal"/>
+            <ImageButton
+                android:id="@+id/item_remove"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_remove"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
