@@ -1,6 +1,7 @@
 package com.hasib.workmanagerexample;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +17,7 @@ import androidx.work.ListenableWorker;
 import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
+import java.io.ByteArrayOutputStream;
 import java.util.Date;
 import java.util.Locale;
 
@@ -44,16 +46,31 @@ public class SaveImageToFileWorker extends Worker {
 
             Bitmap bitmap = BitmapFactory.decodeStream(resolver.openInputStream(Uri.parse(resourceUri)));
 
-            String outputUri = MediaStore.Images.Media.insertImage(
-                    resolver, bitmap, TITLE, DATE_FORMATTER.format(new Date()));
+//            String outputUri = MediaStore.Images.Media.insertImage(
+//                    resolver, bitmap, TITLE, DATE_FORMATTER.format(new Date()));
 
-            if (TextUtils.isEmpty(outputUri)) {
+            ContentValues values = new ContentValues();
+            values.put(MediaStore.Images.Media.DISPLAY_NAME, TITLE);
+            values.put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures");
+            values.put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg");
+            values.put(MediaStore.Images.Media.IS_PENDING, 1);
+            values.put(MediaStore.Images.Media.DATE_ADDED, DATE_FORMATTER.format(new Date()));
+
+            Uri outputUri = resolver.insert(MediaStore.Images.Media.getContentUri(MediaStore.VOLUME_EXTERNAL), values);
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            if (outputUri != null) {
+                resolver.openOutputStream(outputUri).write(stream.toByteArray());
+            }
+            bitmap.recycle();
+
+            if (outputUri != null && TextUtils.isEmpty(outputUri.toString())) {
                 Log.e(TAG, "Writing to MediaStore failed");
                 return Result.failure();
             }
 
             Data outputData = new Data.Builder()
-                    .putString(Constants.KEY_IMAGE_URI, outputUri)
+                    .putString(Constants.KEY_IMAGE_URI, outputUri.toString())
                     .build();
             return Result.success(outputData);
         } catch (Exception e) {
