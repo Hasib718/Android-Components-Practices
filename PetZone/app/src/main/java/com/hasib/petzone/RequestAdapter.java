@@ -85,5 +85,5 @@ public class RequestAdapter extends ListAdapter<FoodTransactionRequest, RequestA
             super(binding.getRoot());
             this.binding = binding;
         }
-    }
+    },
 }

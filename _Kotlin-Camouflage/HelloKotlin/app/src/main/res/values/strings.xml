@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">My Dice Roller</string>
+    <string name="tap">Tap</string>
+    <string name="color_me">Color Me</string>
+    <string name="box_one">Box One</string>
+    <string name="box_two">Box Two</string>
+    <string name="box_three">Box Three</string>
+    <string name="box_four">Box Four</string>
+    <string name="box_five">Box Five</string>
+    <string name="how_to_play">How to Plaay</string>
+    <string name="tap_the_boxes_and_buttons">Tap the screen and buttons.</string>
+    <string name="button_red">RED</string>
+    <string name="button_yellow">Yellow</string>
+    <string name="button_green">Green</string>
+    <string name="about_me">About Me</string>
+
+    <string name="bio">Lorem ipsum dolor sit amet \n consectetur adipisicing elit. Quam voluptatibus
+    \nexpedita ratione magnam commodi repellat necessitatibus? Quam quas unde atque blanditiis
+    \nsimilique repellendus, veritatis consectetur fugit doloremque fuga, aliquam nesciunt?
+    \nAperiam quo ex ipsa sit voluptas vero ratione tenetur \n tempora? A inventore quam quaerat, dolorum
+    \nnemo at cum ab dicta enim cumque maxime minus porro praesentium vero corporis saepe omnis.
+    \nNecessitatibus numquam quisquam eum aut dolorem voluptates non voluptatem, explicabo consectetur
+    \naperiam. Velit eligendi vero, neque \nminus non debitis totam, ratione magnam quisquam quaerat
+    \nducimus, illum libero at deserunt nisi?
+    \nAliquid beatae minus quia nemo facilis repellat ipsa sequi \n sed quibusdam laboriosam quisquam
+    \nerror odio suscipit itaque nam rerum, ab, consequatur obcaecati atque laudantium totam ea
+    \naliquam perferendis temporibus? Non!
+    \nEaque impedit cumque illo amet vitae repellendus aspernatur in, dolore, porro totam quasi
+    \nexercitationem dolores rem. Tenetur \n officiis architecto aspernatur debitis quae culpa magni
+    \nquisquam assumenda ipsam, vitae odio at!</string>
+    <string name="what_is_your_nickname">What is your Nickname?</string>
+    <string name="done">Done</string>
+    <string name="yellow_star">Yellow star</string>
+    <string name="name">Aleks Haecky</string>
+</resources>
