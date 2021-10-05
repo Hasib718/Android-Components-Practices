@@ -7,9 +7,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class LoggerLocalDataSource @Inject constructor(private val logDao: LogDao) {
+class LoggerLocalDataSource @Inject constructor(
+    private val logDao: LogDao
+) : LoggerDataSource {
 
-    fun addLog(msg: String) {
+    override fun addLog(msg: String) {
         GlobalScope.launch(Dispatchers.IO) {
             logDao.insertAll(
                 Log(
@@ -19,7 +21,7 @@ class LoggerLocalDataSource @Inject constructor(private val logDao: LogDao) {
         }
     }
 
-    fun getAllLogs(callback: (List<Log>) -> Unit) {
+    override fun getAllLogs(callback: (List<Log>) -> Unit) {
         GlobalScope.launch(Dispatchers.IO) {
             val logs = logDao.getAll()
             launch(Dispatchers.Default) {
@@ -28,7 +30,7 @@ class LoggerLocalDataSource @Inject constructor(private val logDao: LogDao) {
         }
     }
 
-    fun removeLogs() {
+    override fun removeLogs() {
         GlobalScope.launch(Dispatchers.IO) {
             logDao.nukeTable()
         }

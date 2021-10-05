@@ -5,8 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.hasib.androidhiltdemo.data.LoggerLocalDataSource
+import com.hasib.androidhiltdemo.data.LoggerDataSource
 import com.hasib.androidhiltdemo.databinding.FragmentButtonsBinding
+import com.hasib.androidhiltdemo.di.InMemoryLogger
 import com.hasib.androidhiltdemo.navigator.AppNavigator
 import com.hasib.androidhiltdemo.navigator.Screens
 import dagger.hilt.android.AndroidEntryPoint
@@ -18,8 +19,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class ButtonsFragment : Fragment() {
 
+    @InMemoryLogger
     @Inject
-    lateinit var logger: LoggerLocalDataSource
+    lateinit var logger: LoggerDataSource
+
     @Inject
     lateinit var navigator: AppNavigator
 

@@ -8,9 +8,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.hasib.androidhiltdemo.data.Log
-import com.hasib.androidhiltdemo.data.LoggerLocalDataSource
+import com.hasib.androidhiltdemo.data.LoggerDataSource
 import com.hasib.androidhiltdemo.databinding.FragmentLogsBinding
 import com.hasib.androidhiltdemo.databinding.TextRowItemBinding
+import com.hasib.androidhiltdemo.di.InMemoryLogger
 import com.hasib.androidhiltdemo.util.DateFormatter
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -21,8 +22,10 @@ import javax.inject.Inject
 @AndroidEntryPoint
 class LogsFragment : Fragment() {
 
+    @InMemoryLogger
     @Inject
-    lateinit var logger: LoggerLocalDataSource
+    lateinit var logger: LoggerDataSource
+
     @Inject
     lateinit var dateFormatter: DateFormatter
 
