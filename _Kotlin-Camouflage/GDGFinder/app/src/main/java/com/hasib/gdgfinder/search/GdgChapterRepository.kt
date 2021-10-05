@@ -1,10 +1,7 @@
 package com.hasib.gdgfinder.search
 
 import android.location.Location
-import com.hasib.gdgfinder.network.GdgApiService
-import com.hasib.gdgfinder.network.GdgChapter
-import com.hasib.gdgfinder.network.GdgResponse
-import com.hasib.gdgfinder.network.LatLong
+import com.hasib.gdgfinder.network.*
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
@@ -12,12 +9,6 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.withContext
 
 class GdgChapterRepository(gdgApiService: GdgApiService) {
-
-    /**
-     * A single network request, the results won't change. For this lesson we did not add an offline cache for simplicity
-     * and the result will be cached in memory.
-     */
-    private val request = gdgApiService.getChapters()
 
     /**
      * An in-progress (or potentially completed) sort, this may be null or cancelled at any time.
@@ -87,20 +78,9 @@ class GdgChapterRepository(gdgApiService: GdgApiService) {
      *
      * @return the result of the started sort
      */
-    private suspend fun doSortData(location: Location? = null): SortedData {
-        // since we'll need to launch a new coroutine for the sorting use coroutineScope.
-        // coroutineScope will automatically wait for anything started via async {} or await{} in it's block to
-        // complete.
-        val result = coroutineScope {
-            // launch a new coroutine to do the sort (so other requests can wait for this sort to complete)
-            val deferred = async { SortedData.from(request.await(), location) }
-            // cache the Deferred so any future requests can wait for this sort
-            inProgressSort = deferred
-            // and return the result of this sort
-            deferred.await()
+    private suspend fun doSortData(location: Location? = null) =  withContext(Dispatchers.IO) {
+            SortedData.from(GdgApi.retrofitService.getChapters(), location)
         }
-        return result
-    }
 
     /**
      * Call when location changes.

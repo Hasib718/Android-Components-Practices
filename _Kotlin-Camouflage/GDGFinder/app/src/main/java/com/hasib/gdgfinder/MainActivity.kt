@@ -24,6 +24,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+
         setupNavigation()
     }
 
@@ -43,7 +45,7 @@ class MainActivity : AppCompatActivity() {
 
         val navController = navHostFragment.findNavController()
 
-//        setSupportActionBar(binding.toolbar)
+        setSupportActionBar(binding.toolbar)
 
         // then setup the action bar, tell it about the DrawerLayout
         setupActionBarWithNavController(navController, binding.drawerLayout)

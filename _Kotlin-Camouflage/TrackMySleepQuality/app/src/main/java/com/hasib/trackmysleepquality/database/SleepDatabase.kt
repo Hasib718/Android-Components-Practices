@@ -39,6 +39,20 @@ abstract class SleepDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: SleepDatabase? = null
 
+
+        fun getInstance(context: Context): SleepDatabase {
+            return INSTANCE ?: synchronized(this) {
+                INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
+            }
+        }
+
+        private fun buildDatabase(context: Context): SleepDatabase {
+            return Room.databaseBuilder(context, SleepDatabase::class.java, "sleep_history_database")
+                .fallbackToDestructiveMigration()
+                .build()
+        }
+
+/**
         /**
          * Helper function to get the database.
          *
@@ -87,5 +101,6 @@ abstract class SleepDatabase : RoomDatabase() {
                 return instance
             }
         }
+        **/
     }
 }

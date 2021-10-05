@@ -11,10 +11,7 @@ private const val BASE_URL = "https://android-kotlin-fun-mars-server.appspot.com
 
 interface GdgApiService {
     @GET("gdg-directory.json")
-
-    fun getChapters():
-    // The Coroutine Call Adapter allows us to return a Deferred, a Job with a result
-            Deferred<GdgResponse>
+    suspend fun getChapters(): GdgResponse
 }
 
 private val moshi = Moshi.Builder()
