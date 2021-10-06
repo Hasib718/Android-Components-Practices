@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Fragment in Fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="parent_2">Parent 2</string>
+    <string name="parent_1">Parent 1</string>
+    <string name="child_1">Child 1</string>
+    <string name="child_2">Child 2</string>
+</resources>
