@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ValueBox">
+        <attr name="boxLabel" format="string" />
+        <attr name="boxValue" format="string" />
+        <attr name="boxLabelShapeColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="DialView">
+        <attr name="fanColor1" format="color" />
+        <attr name="fanColor2" format="color" />
+        <attr name="fanColor3" format="color" />
+    </declare-styleable>
+</resources>

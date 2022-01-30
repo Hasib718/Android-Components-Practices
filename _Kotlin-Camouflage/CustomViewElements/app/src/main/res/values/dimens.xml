@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="value_box_text_size">16sp</dimen>
+    <dimen name="space_sm">4dp</dimen>
+    <dimen name="space_m">8dp</dimen>
+    <dimen name="space_l">16dp</dimen>
+    <dimen name="space_xl">24dp</dimen>
+    <dimen name="space_xxl">32dp</dimen>
+    <dimen name="space_xxxl">40dp</dimen>
+    <dimen name="space_xxxxl">48dp</dimen>
+    <dimen name="fan_dimen">250dp</dimen>
+</resources>
