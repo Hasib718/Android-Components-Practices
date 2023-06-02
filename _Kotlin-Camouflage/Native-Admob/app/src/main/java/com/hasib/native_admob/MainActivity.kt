@@ -40,7 +40,9 @@ class MainActivity : AppCompatActivity() {
                 val color =
                     if (nightModeFlags == Configuration.UI_MODE_NIGHT_YES) Color.BLACK else Color.WHITE
                 val styles =
-                    NativeTemplateStyle.Builder().withMainBackgroundColor(ColorDrawable(color))
+                    NativeTemplateStyle.Builder()
+                        .withMainBackgroundColor(ColorDrawable(color))
+                        .withCallToActionTypefaceColor(color)
                         .build()
                 val template = findViewById<TemplateView>(R.id.my_template)
                 template.setStyles(styles)
@@ -57,6 +59,6 @@ class MainActivity : AppCompatActivity() {
             )
             .build()
 
-        adLoader.loadAd(AdRequest.Builder().build())
+        adLoader.loadAds(AdRequest.Builder().build(), 3)
     }
 }
