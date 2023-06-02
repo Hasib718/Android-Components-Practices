@@ -5,10 +5,9 @@ package com.hasib.basiccompose.ui.screens
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -57,7 +56,7 @@ fun HomeScreen(navController: NavController) {
             },
             floatingActionButton = {
                 FloatingActionButton(onClick = { /*TODO*/ }) {
-                    Icon(imageVector = Icons.Default.Search, contentDescription = "Search")
+                    Icon(imageVector = Icons.Default.Delete, contentDescription = "Search")
                 }
             }
         ) {
@@ -81,6 +80,9 @@ fun Greeting(name: String, navController: NavController) {
         )
         Button(onClick = { navController.navigate(ListScreen.ROUTE_NAME) }) {
             Text(text = "Click Me!")
+        }
+        Button(onClick = { navController.navigate(NumberPadScreen.ROUTE_NAME) }) {
+            Text(text = "Number Pad")
         }
     }
 }
