@@ -69,7 +69,7 @@ fun HomeScreen(navController: NavController) {
 fun Greeting(name: String, navController: NavController) {
     Column(
         modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceAround,
+        verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
@@ -79,10 +79,13 @@ fun Greeting(name: String, navController: NavController) {
             fontSize = 30.sp
         )
         Button(onClick = { navController.navigate(ListScreen.ROUTE_NAME) }) {
-            Text(text = "Click Me!")
+            Text(text = "List Screen")
         }
         Button(onClick = { navController.navigate(NumberPadScreen.ROUTE_NAME) }) {
             Text(text = "Number Pad")
+        }
+        Button(onClick = { navController.navigate(RegisterScreen.ROUTE_NAME) }) {
+            Text(text = "Register Here")
         }
     }
 }

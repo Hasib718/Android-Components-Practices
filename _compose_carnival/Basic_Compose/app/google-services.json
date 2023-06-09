@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "217993196430",
+    "project_id": "basic-compose-80218",
+    "storage_bucket": "basic-compose-80218.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:217993196430:android:1a59a1dc05d6464d4a6adf",
+        "android_client_info": {
+          "package_name": "com.hasib.basiccompose"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "217993196430-e0m2ubs39rm1s6j2iauvcm43cs0un3b4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzNfVbQfYRe-nIT0YYM38KEl9_IAI9CHE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "217993196430-e0m2ubs39rm1s6j2iauvcm43cs0un3b4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

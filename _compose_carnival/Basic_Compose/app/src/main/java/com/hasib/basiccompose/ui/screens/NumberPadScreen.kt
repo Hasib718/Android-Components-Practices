@@ -65,7 +65,7 @@ fun NumberRow(args: List<String>, navController: NavController) {
     ) {
         for (i in 0 until 4) {
             Button(
-                onClick = { navController.popBackStack() },
+                onClick = { navController.navigateUp() },
                 colors = ButtonDefaults.textButtonColors(
                     containerColor = MaterialTheme.colorScheme.primaryContainer,
                     contentColor = MaterialTheme.colorScheme.onPrimaryContainer

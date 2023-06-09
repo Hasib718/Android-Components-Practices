@@ -3,13 +3,17 @@
 package com.hasib.basiccompose.ui.screens
 
 import android.annotation.SuppressLint
+import android.content.ContentValues.TAG
+import android.util.Log
+import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Checkbox
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -21,14 +25,19 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.hasib.basiccompose.ui.theme.BasicComposeTheme
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.hasib.basiccompose.model.User
 
 object ListScreen {
     const val ROUTE_NAME = "list_screen"
@@ -37,6 +46,25 @@ object ListScreen {
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun ListScreen(navController: NavController) {
+    val context = LocalContext.current
+    val database = Firebase.database.reference
+    val users = remember { mutableStateListOf<User>() }
+
+    LaunchedEffect(key1 = Unit) {
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                users.clear()
+                for (user in snapshot.children) {
+                    users.add(user.getValue(User::class.java)!!)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.w(TAG, "Failed to read value.", error.toException())
+            }
+        })
+    }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -57,7 +85,7 @@ fun ListScreen(navController: NavController) {
                     ),
                     navigationIcon = {
                         IconButton(
-                            onClick = { navController.popBackStack() },
+                            onClick = { navController.navigateUp() },
                             modifier = Modifier.padding(start = 8.dp)
                         ) {
                             Icon(
@@ -69,39 +97,25 @@ fun ListScreen(navController: NavController) {
                     }
                 )
             }) {
-            val checkboxStates = remember {
-                mutableStateListOf<Boolean>()
-            }
-            val listItems = ((0..100).map {
-                checkboxStates.add(false)
-                it.toString()
-            }).toList()
 
-            LazyColumn {
-                items(listItems.size) { index ->
+            LazyColumn(modifier = Modifier.padding(it)) {
+                items(users) { user ->
                     ListItem(
-                        headlineText = {
-                            Text(text = "List Item - ${listItems[index]}")
+                        headlineContent = {
+                            Text(text = user.name)
+                        },
+                        supportingContent = {
+                            Text(text = user.email)
                         },
                         leadingContent = {
                             Icon(imageVector = Icons.Default.Star, contentDescription = "Star")
                         },
-                        trailingContent = {
-                            Checkbox(
-                                checked = checkboxStates[index],
-                                onCheckedChange = { checkboxStates[index] = it })
+                        modifier = Modifier.clickable {
+                            Toast.makeText(context, "You are registered", Toast.LENGTH_SHORT).show()
                         }
                     )
                 }
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ListScreenPreview() {
-    BasicComposeTheme {
-        ListScreen(navController = rememberNavController())
     }
 }
